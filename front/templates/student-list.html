@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card-body">
+    <h4>Students List</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Identity Number</th>
+                <th scope="col">Age</th>
+                <th scope="col">Province</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <td>{{ student.name }}</td>
+                <td>{{ student.last_Name }}</td>
+                <td>{{ student.identity_Number }}</td>
+                <td>{{ student.age }}</td>
+                <td>{{ student.province }}</td>
+                <td><a type="button" class="btn btn-warning" href="/front/student-update/{{ student.id }}">Editar</a>
+                    <a type="button" class="btn btn-danger" href="/front/student-delete/{{ student.id }}">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a type="button" class="btn btn-success" href="{%url 'student-create' %}">Create</a>
+</div>
+{% endblock %}
