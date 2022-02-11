@@ -11,7 +11,7 @@ class ProvinceChoices(models.TextChoices):
     ## other provinces
 
 class MunicipalityChoices(models.TextChoices):
-    Plaza = 'Plaza de la revolución'
+    Plaza_de_la_Revolucion = 'Plaza de la revolucion'
     Playa = 'Playa'
     ## other municipalities
 
@@ -20,14 +20,14 @@ class StateChoices(models.TextChoices):
     Inactive = 'Inactive'
 
 class SituationChoices(models.TextChoices):
-    NewIncome = 'New income'
+    New_Income = 'New income'
     Continuing = 'Continuing'
     Repeating = 'Repeating'
     Transfer = 'Transfer'
     ReEntry = 'Re-entry'
 
 class CareerChoices(models.TextChoices):
-    ComputerScience = 'Computer Science'
+    Computer_Science = 'Computer Science'
     Math = 'Math'
     ## other careers
 
@@ -42,24 +42,24 @@ class CourseTypeChoices(models.TextChoices):
 
 class SourceOfIncomeChoices(models.TextChoices):
     PreUniversitary = 'Pre-universitary'
-    EnabledMediumSuperior = 'Enabled Medium Superior'
-    Decree91 = 'Decree 91'
-    Order18 = 'Order 18'
-    NationalContests = 'National Contests'
+    Enabled_Medium_Superior = 'Enabled Medium Superior'
+    Decree_91 = 'Decree 91'
+    Order_18 = 'Order 18'
+    National_Contests = 'National Contests'
     Minint = 'MININT'
-    HighPerformanceAthletes = 'High Performance Athletes'
-    LevelingCourses = 'Leveling Courses'
+    High_Performance_Athletes = 'High Performance Athletes'
+    Leveling_Courses = 'Leveling Courses'
     Foreign = 'Foreign'
 
 class AcademicOriginChoices(models.TextChoices):
     PreUniversitary = 'Pre-universitary'
     Foreign = 'Foreign'
-    TechnicalAndProfessionalLearning = 'Technical and Professional Learning'
-    Order18 = 'Order 18'
+    Technical_And_Professional_Learning = 'Technical and Professional Learning'
+    Order_18 = 'Order 18'
 
 class StudyRegimenChoices(models.TextChoices):
-    OnlyStudy = 'Only Study'
-    StudyAndWork = 'Study and Work'
+    Only_Study = 'Only Study'
+    Study_And_Work = 'Study and Work'
 
 class CivilStateChoices(models.TextChoices):
     Single = 'Single'
@@ -75,12 +75,12 @@ class SkinColorChoices(models.TextChoices):
 class StudentTypeChoices(models.TextChoices):
     Intern = 'Intern'
     Extern = 'Extern'
-    HalfIntern = 'Half-Intern'
-    NationalScolarship = 'National Scolarship'
-    InternationalScolarship = 'International Scolarship'
+    Half_Intern = 'Half-Intern'
+    National_Scolarship = 'National Scolarship'
+    International_Scolarship = 'International Scolarship'
 
 class AcademicLevelChoices(models.TextChoices):
     Basic = 'Basic'
     Medium = 'Medium'
-    MediumSuperior = 'Medium Superior'
+    Medium_Superior = 'Medium Superior'
     Superior = 'Superior'

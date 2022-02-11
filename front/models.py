@@ -1,5 +1,5 @@
 from django.db import models
-from model_choices import *
+from .model_choices import *
 
 class Student(models.Model):
     identity_Number = models.CharField(db_column='identity_number', max_length=100, blank=False)
@@ -9,17 +9,17 @@ class Student(models.Model):
     province = models.CharField(max_length=100, choices=ProvinceChoices.choices, default=ProvinceChoices.Habana)
     municipality = models.CharField(max_length=100, choices=MunicipalityChoices.choices, default=MunicipalityChoices.Playa)
     situation = models.CharField(max_length=100, choices=SituationChoices.choices, default=StateChoices.Active)
-    state = models.CharField(max_length=100, choices=StateChoices.choices, default=SituationChoices.NewIncome)
+    state = models.CharField(max_length=100, choices=StateChoices.choices, default=SituationChoices.New_Income)
     address = models.CharField(db_column='address', max_length=100, blank=False)
     birth_Date = models.DateField(db_column='birth_date', max_length=100, blank=False)
     group = models.CharField(db_column='group', max_length=100, blank=False)
-    career = models.CharField(max_length=100, choices=CareerChoices.choices, default=CareerChoices.ComputerScience)
+    career = models.CharField(max_length=100, choices=CareerChoices.choices, default=CareerChoices.Computer_Science)
     faculty = models.CharField(max_length=100, choices=FacultyChoices.choices, default=FacultyChoices.Matcom)
     course_Type = models.CharField(max_length=100, choices=CourseTypeChoices.choices, default=CourseTypeChoices.Daily)
     mail = models.EmailField(db_column='mail', max_length=100, blank=False)
     source_of_Income = models.CharField(max_length=100, choices=SourceOfIncomeChoices.choices, default=SourceOfIncomeChoices.PreUniversitary)
     academic_Origin = models.CharField(max_length=100, choices=AcademicOriginChoices.choices, default=AcademicOriginChoices.PreUniversitary)
-    study_Regimen = models.CharField(max_length=100, choices=StudyRegimenChoices.choices, default=StudyRegimenChoices.OnlyStudy)
+    study_Regimen = models.CharField(max_length=100, choices=StudyRegimenChoices.choices, default=StudyRegimenChoices.Only_Study)
     natural_From = models.CharField(db_column='natural_from', max_length=100, blank=False)
     phone_Number = models.CharField(db_column='phone_number', max_length=100, blank=False)
     es_Income_Date = models.DateField(db_column='es_income_date', max_length=100, blank=False)
@@ -38,4 +38,3 @@ class Student(models.Model):
     mothers_Academic_Level = models.CharField(max_length=100, choices=AcademicLevelChoices.choices, default=AcademicLevelChoices.Superior)
     military_Service_Type = models.CharField(db_column='military_service_type', max_length=100)
     age = models.PositiveIntegerField(db_column='age', blank=False)
-
