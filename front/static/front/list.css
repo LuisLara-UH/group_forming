@@ -1,0 +1,56 @@
+
+#addColumnsContainer, #removeColumnsContainer, .itemAdd, .itemRemove
+{
+    display: flex;
+    align-items: center;
+}
+
+#removeColumnsContainer, #addColumnsContainer
+{
+    width: 100vw;
+    flex-wrap: wrap;
+}
+
+#removeColumnsContainer
+{
+    margin-top: 1rem;
+}
+
+.itemAdd, .itemRemove
+{
+    cursor: pointer;
+}
+
+
+.itemAdd>*, .itemRemove>*
+{
+    margin: 0;
+    margin-bottom: 0.5rem;
+}
+
+.buttonAdd, .buttonRemove
+{
+    width: 1.1rem;
+    height: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.1rem;
+    margin-left: 1rem;
+    border-radius: 50%;
+}
+
+.buttonAdd
+{
+    background: green;
+}
+
+.buttonRemove
+{
+    background: red;
+}
+
+.itemAdd:hover>.buttonAdd, .itemRemove:hover>.buttonRemove
+{
+    background:gray;
+}
