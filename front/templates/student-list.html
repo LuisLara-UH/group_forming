@@ -20,8 +20,8 @@
                 <td>{{ student.identity_Number }}</td>
                 <td>{{ student.age }}</td>
                 <td>{{ student.province }}</td>
-                <td><a type="button" class="btn btn-warning" href="/front/student-update/{{ student.id }}">Editar</a>
-                    <a type="button" class="btn btn-danger" href="/front/student-delete/{{ student.id }}">Eliminar</a>
+                <td><a type="button" class="btn btn-warning" href="/student-update/{{ student.id }}">Editar</a>
+                    <a type="button" class="btn btn-danger" href="/student-delete/{{ student.id }}">Eliminar</a>
                 </td>
             </tr>
             {% endfor %}
