@@ -175,8 +175,7 @@ function addFilter()
     let filterItem = document.createElement('div')
     filterItem.className = "filterItem"
     let selectFilter = document.createElement('select');
-    selectFilter.className="filterSelect"
-  
+    
     let filtersName = Object.keys(modelColumnsType);
     for(let i = 0; i < filtersName.length; i++)
     {
@@ -192,6 +191,7 @@ filterItem.addEventListener
     filtersContainer.appendChild(filterItem)
     let selects = filtersContainer.getElementsByTagName('select');
     selects[selects.length - 1].addEventListener('change', changeFilterName.bind(this, selects[selects.length - 1]))
+
 }
 
 function removeFilter(element)
