@@ -1,7 +1,8 @@
 import openpyxl
+from .models import Student
 
 def import_excel_file(file):
-    # TODO put validation here to check excel extension
+    # TODO (OPTIONAL): put validations
 
     wb = openpyxl.load_workbook(file)
 
