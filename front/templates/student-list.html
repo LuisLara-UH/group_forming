@@ -4,7 +4,7 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'front/list.css' %}"/>
 
-<h3>Agregar y quitar columnas</h3>
+<h3>Add or remove table columns</h3>
 <div id="addRemoveColumnsContainer">
     <div id="addColumnsContainer">
         <div class="itemAdd" onClick='addColumn(this)'>
@@ -22,8 +22,26 @@
    
 </div>
 
-<h3>Filtros</h3>
-<div id="filtersContainer"></div>
+<h3>Filters</h3>
+<input type="button" value="Add Filter" onClick='addFilter()'/>
+<br/>
+
+<div id="filtersContainer">
+    <div class="filterItem">
+        
+        <select onChange='changeFilterName(this)'>
+            <option value="Id">Id</option>
+            <option value="Id2">Id2</option>
+        </select>
+        <div class="valueContainer" style="display:flex"> 
+            <input class="since" type="Number" onChange="changeFilterValue"/>
+            -
+            <input class="to" type="Number" onChange="changeFilterValue"/>
+        </div>
+       
+        <div class="buttonRemove" onClick='removeFilterItem(this.parent)'>-</div>
+    </div>
+</div>    
 
 <div class="card-body">
     <h4>Students List</h4>
@@ -109,7 +127,7 @@
                 <td>{{ student.mothers_Academic_Level }}</td>
                 <td>{{ student.military_Service_Type }}</td>
                 
-                <td style="display:flex"><a type="button" class="btn btn-warning" href="/student-update/{{ student.id }}">Editar</a>
+                <td id='{{student.id}}' style="display:flex"><a type="button" class="btn btn-warning" href="/student-update/{{ student.id }}">Editar</a>
                     <a type="button" class="btn btn-danger" href="/student-delete/{{ student.id }}">Eliminar</a>
                 </td>
             </tr>

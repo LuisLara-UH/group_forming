@@ -1,5 +1,5 @@
 
-#addColumnsContainer, #removeColumnsContainer, .itemAdd, .itemRemove
+#addColumnsContainer, #removeColumnsContainer, .itemAdd, .itemRemove, .filterItem
 {
     display: flex;
     align-items: center;
@@ -37,6 +37,7 @@
     justify-content: center;
     margin-right: 0.1rem;
     margin-left: 1rem;
+    cursor: pointer;
     border-radius: 50%;
 }
 
@@ -53,4 +54,15 @@
 .itemAdd:hover>.buttonAdd, .itemRemove:hover>.buttonRemove
 {
     background:gray;
+}
+
+.filterItem
+{
+    height: fit-content;
+
+}
+
+.filterItem>.filterSelect
+{
+    height: 100%;
 }
