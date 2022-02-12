@@ -27,6 +27,23 @@
             {% endfor %}
         </tbody>
     </table>
+    <!-- Button to create new student-->
     <a type="button" class="btn btn-success" href="{%url 'student-create' %}">Create</a>
+
+    <!-- Button to upload excel file-->
+    <form action="{% url 'upload-file' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file"
+               title="Upload excel file"
+               name="excel_file"
+               style="border: 1px solid black; padding: 5px;"
+               required="required">
+        <p>
+        <input type="submit"
+               class="btn btn-success"
+               value="Upload"
+               style="border: 1px solid green; padding:5px; border-radius: 2px; cursor: pointer;">
+    </form>
+
 </div>
 {% endblock %}

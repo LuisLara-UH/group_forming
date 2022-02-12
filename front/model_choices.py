@@ -1,5 +1,6 @@
 from django.db import models
 
+# TODO: fill missing values
 class CountryChoices(models.TextChoices):
     Cuba = 'Cuba'
     USA = 'USA'

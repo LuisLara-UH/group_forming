@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from .models import Student
 from .forms import StudentForm
+from .utils import import_excel_file
 
 def home(request):
+    # TODO: Fill this view with the initial page
     return render(request, 'home.html', {'name': 'World'})
 
 def studentList(request):  
@@ -16,7 +18,7 @@ def studentCreate(request):
             try:  
                 form.save() 
                 model = form.instance
-                return redirect('/front/student-list')  
+                return redirect('student-list')  
             except:  
                 pass  
     else:  
@@ -32,7 +34,7 @@ def studentUpdate(request, id):
             try:  
                 form.save() 
                 model = form.instance
-                return redirect('/front/student-list')  
+                return redirect('student-list')  
             except Exception as e: 
                 pass    
     return render(request,'student-update.html',{'form':form})  
@@ -43,4 +45,10 @@ def studentDelete(request, id):
         student.delete()
     except:
         pass
-    return redirect('/front/student-list')
+    return redirect('student-list')
+
+def upload_file(request):
+    excel_file = request.FILES["excel_file"]
+    import_excel_file(excel_file)
+
+    return redirect('student-list') 
