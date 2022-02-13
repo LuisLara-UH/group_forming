@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import *
 from .forms import *
-from .utils import import_excel_file
+from .utils import *
 from .services import *
 
 
@@ -53,7 +53,7 @@ def student_delete(request, id):
     try:
         student.delete()
     except Exception as e:
-        print("There was an exception deleting the student: " + e)
+        print("There was an exception deleting the student: " + str(e))
 
     return redirect('student-list')
 
@@ -61,7 +61,10 @@ def student_delete(request, id):
 """Upload Files"""
 def upload_file(request):
     excel_file = request.FILES["excel_file"]
-    import_excel_file(excel_file)
+    matrix = import_excel_file(excel_file)
+    studentsToCreate = get_students_from_excel(matrix)
+    for s in studentsToCreate:
+        s.save()
 
     return redirect('student-list')
 

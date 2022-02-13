@@ -8,9 +8,15 @@ class Student(models.Model):
     def __eq__(self, other):
         return self.id == other.id
 
+    def __hash__(self):
+        return self.id
+
     def __str__(self):
-        return self.name + " " + self.last_Name
-    
+        try:
+            return self.name + " " + self.last_Name
+        except:
+            return 'Desconocido'
+
     identity_Number = models.CharField(db_column='identity_number', max_length=100, blank=False)
     name = models.CharField(db_column='name', max_length=100, blank=False)
     last_Name = models.CharField(db_column='last_name', max_length=100, blank=False)
