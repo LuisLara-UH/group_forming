@@ -82,6 +82,14 @@ def create_group(request):
 
     return render(request, 'create-group.html')
 
+def delete_group(request, id):
+    group = GroupModel.objects.get(id=id)
+    try:
+        group.delete()
+    except:
+        pass
+    return redirect('group-list')
+
 
 def change_group_name(request, id):
     group = GroupModel.objects.get(id=id)

@@ -22,7 +22,7 @@
                 <td>{{ group.countStudents }}</td>
                 <td><a  href="/change-group-name/{{group.group.id}}">Change Group Name</a></td>
                 <td ><a href="#">Add or remove students from this group</a></td>
-                <td ><a href="#">Delete this group</a></td>
+                <td ><a href="delete-group/{{group.group.id}}">Delete this group</a></td>
             </tr>
             {% endfor %}
         </tbody>
