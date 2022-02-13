@@ -10,8 +10,8 @@ class StudentForm(ModelForm):
         model = Student
         fields = '__all__'
         widgets = {
-            'birth_Date': forms.SelectDateWidget(),
-            'enrollment_Date': forms.SelectDateWidget(),
-            'es_Income_Date': forms.SelectDateWidget(),
-            'ces_Income_Date': forms.SelectDateWidget(),
+            'birth_Date': forms.SelectDateWidget(years=range(1990, 2022)),
+            'enrollment_Date': forms.SelectDateWidget(years=range(1990, 2022)),
+            'es_Income_Date': forms.SelectDateWidget(years=range(1990, 2022)),
+            'ces_Income_Date': forms.SelectDateWidget(years=range(1990, 2022)),
         }
