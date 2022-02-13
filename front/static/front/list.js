@@ -1,5 +1,4 @@
-
-var modelColumnsType = 
+var modelColumnsType =
 {
     'Name':'text',
     'Last Name':'text',
@@ -58,10 +57,7 @@ var columnsOn = []
 for(let i = 0; i< ths.length; i++)
     columnsOn.push(ths[i].innerHTML)
 
-   
-
 var columnsOut = []
-
 
 var students = []
 
@@ -187,7 +183,7 @@ function addFilter()
     <input type="text" onChange="changeFilterValue"/>
     </div>
     <div class="buttonRemove" onClick='removeFilter(this)'>-</div>`
-filterItem.addEventListener
+    filterItem.addEventListener
     filtersContainer.appendChild(filterItem)
     let selects = filtersContainer.getElementsByTagName('select');
     selects[selects.length - 1].addEventListener('change', changeFilterName.bind(this, selects[selects.length - 1]))
@@ -199,7 +195,6 @@ function removeFilter(element)
     let filtersContainer = document.getElementById('filtersContainer');
     filtersContainer.removeChild(element.parentNode)
 }
-
 
 
 updateColumnsAddRemove()

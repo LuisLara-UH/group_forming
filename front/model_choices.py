@@ -1,24 +1,29 @@
 from django.db import models
 
+
 # TODO: fill missing values
 class CountryChoices(models.TextChoices):
     Cuba = 'Cuba'
     USA = 'USA'
-    ## other countries
+    # other countries
+
 
 class ProvinceChoices(models.TextChoices):
     Habana = 'La Habana'
     Artemisa = 'Artemisa'
-    ## other provinces
+    # other provinces
+
 
 class MunicipalityChoices(models.TextChoices):
     Plaza_de_la_Revolucion = 'Plaza de la revolucion'
     Playa = 'Playa'
-    ## other municipalities
+    # other municipalities
+
 
 class StateChoices(models.TextChoices):
     Active = 'Active'
     Inactive = 'Inactive'
+
 
 class SituationChoices(models.TextChoices):
     New_Income = 'New income'
@@ -27,19 +32,23 @@ class SituationChoices(models.TextChoices):
     Transfer = 'Transfer'
     ReEntry = 'Re-entry'
 
+
 class CareerChoices(models.TextChoices):
     Computer_Science = 'Computer Science'
     Math = 'Math'
-    ## other careers
+    # other careers
+
 
 class FacultyChoices(models.TextChoices):
     Matcom = 'Matcom'
-    ## other faculties
+    # other faculties
+
 
 class CourseTypeChoices(models.TextChoices):
     Daily = 'Daily'
     Nightly = 'Nightly'
-    ## other course types
+    # other course types
+
 
 class SourceOfIncomeChoices(models.TextChoices):
     PreUniversitary = 'Pre-universitary'
@@ -52,15 +61,18 @@ class SourceOfIncomeChoices(models.TextChoices):
     Leveling_Courses = 'Leveling Courses'
     Foreign = 'Foreign'
 
+
 class AcademicOriginChoices(models.TextChoices):
     PreUniversitary = 'Pre-universitary'
     Foreign = 'Foreign'
     Technical_And_Professional_Learning = 'Technical and Professional Learning'
     Order_18 = 'Order 18'
 
+
 class StudyRegimenChoices(models.TextChoices):
     Only_Study = 'Only Study'
     Study_And_Work = 'Study and Work'
+
 
 class CivilStateChoices(models.TextChoices):
     Single = 'Single'
@@ -68,10 +80,12 @@ class CivilStateChoices(models.TextChoices):
     Divorced = 'Divorced'
     Widower = 'Widower'
 
+
 class SkinColorChoices(models.TextChoices):
     White = 'White'
     Black = 'Black'
     Brown = 'Brown'
+
 
 class StudentTypeChoices(models.TextChoices):
     Intern = 'Intern'
@@ -79,6 +93,7 @@ class StudentTypeChoices(models.TextChoices):
     Half_Intern = 'Half-Intern'
     National_Scolarship = 'National Scolarship'
     International_Scolarship = 'International Scolarship'
+
 
 class AcademicLevelChoices(models.TextChoices):
     Basic = 'Basic'
