@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'front/list.css' %}"/>
+<a href={% url 'group-list' %}>Back to group list</a>
+<h3>Add or remove students to the group <span style='color:blue'>{{group.name}}</span></h3>
+<div id="addRemoveColumnsContainer">
+    <div id="addColumnsContainer">
+
+        {% for s in studentsOut %}
+        <a href="/add-student-to-group/{{group.id}}/{{s.id}}">
+        <div class="itemAdd" >
+                <div class="buttonAdd">+</div>
+                <p>{{s}}</p>
+        </div>
+    </a>
+    {% endfor %}
+    </div>
+
+    <div id="removeColumnsContainer">
+        {% for s in studentsIn %}
+        <a href="/remove-student-to-group/{{group.id}}/{{s.id}}">
+        <div class="itemRemove">
+            <div class="buttonRemove">-</div>
+            <p>{{s}}</p>
+        </div>    
+    </a>
+    {% endfor %}
+</div>
+
+{% endblock %}

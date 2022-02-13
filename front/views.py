@@ -76,6 +76,49 @@ def group_list(request):
     return render(request, 'group-list.html', {'groups': groups_view})
 
 
+
+def create_group(request):
+    if request.method == "POST":  
+        group_name = request.POST['name']
+        if group_name != '':
+            try:  
+                new_group = GroupModel(name = group_name)
+                new_group.save()
+                return redirect('group-list')  
+            except:  
+                pass  
+
+    return render(request, 'create-group.html')
+
+def delete_group(request, id):
+    group = GroupModel.objects.get(id=id)
+    try:
+        group.delete()
+    except:
+        pass
+    return redirect('group-list')
+
+def group_students(request, id):
+    group = GroupModel.objects.get(id=id)
+    all_students = Student.objects.all()
+    groupStudents = group.students.all()
+    
+    studentsIn, studentsOut = get_students_group(groupStudents, all_students)
+    return render(request, 'group-students.html', {'group':group, 'studentsIn':studentsIn, 'studentsOut':studentsOut})
+
+def add_student_to_group(request, id_group, id_student):
+    group = GroupModel.objects.get(id = id_group)
+    student = Student.objects.get(id = id_student)
+    group.students.add(student)
+    return redirect('group-students', id=group.id)
+
+def remove_student_to_group(request, id_group, id_student):
+    group = GroupModel.objects.get(id = id_group)
+    student = Student.objects.get(id = id_student)
+    group.students.remove(student)
+    return redirect('group-students', id=group.id)
+
+
 def change_group_name(request, id):
     group = GroupModel.objects.get(id=id)
     form = {'name': group.name}
