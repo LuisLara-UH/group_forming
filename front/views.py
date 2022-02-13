@@ -68,6 +68,21 @@ def group_list(request):
     
     return render(request, 'group-list.html', {'groups':groupsView})
 
+
+def create_group(request):
+    if request.method == "POST":  
+        group_name = request.POST['name']
+        if group_name != '':
+            try:  
+                new_group = GroupModel(name = group_name)
+                new_group.save()
+                return redirect('group-list')  
+            except:  
+                pass  
+
+    return render(request, 'create-group.html')
+
+
 def change_group_name(request, id):
     group = GroupModel.objects.get(id=id)
     form = {'name':group.name}

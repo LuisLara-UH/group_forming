@@ -10,4 +10,5 @@ urlpatterns = [
     path('upload-file', views.upload_file, name='upload-file'),
     path('group-list', views.group_list, name='group-list'),
     path('change-group-name/<int:id>', views.change_group_name, name='change-group-name'),
+    path('create-group', views.create_group, name='create-group'),
 ]
