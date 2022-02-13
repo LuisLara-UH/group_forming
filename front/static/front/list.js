@@ -2,6 +2,7 @@ var modelColumnsType =
 {
     'Name':'text',
     'Last Name':'text',
+    'Identity Number':'text',
     'Age':'number',
     'Country':'text',
     'Province':'text',
@@ -53,12 +54,19 @@ var columnTypeToHtml=
 var trs = document.getElementsByTagName('tr')
 var ths = trs[0].getElementsByTagName("th")
 
+var initialColumns = ['Identity Number', 'Name', 'Last Name', 'Age', 'Province', 'Municipality']
 var columnsOn = []
-for(let i = 0; i< ths.length; i++)
-    columnsOn.push(ths[i].innerHTML)
-
 var columnsOut = []
+for(let i = 0; i< ths.length; i++)
+{
+    if(!initialColumns.includes(ths[i].innerHTML))
+        columnsOut.push(ths[i].innerHTML)
+}
 
+for(let i = 0; i < initialColumns.length; i++)
+    columnsOn.push(initialColumns[i])
+
+console.log(columnsOn)
 var students = []
 
 for(let i = 1; i < trs.length; i++)
@@ -198,3 +206,4 @@ function removeFilter(element)
 
 
 updateColumnsAddRemove()
+udpateTable()
