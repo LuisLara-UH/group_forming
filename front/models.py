@@ -39,3 +39,7 @@ class Student(models.Model):
     mothers_Academic_Level = models.CharField(max_length=100, choices=AcademicLevelChoices.choices, default=AcademicLevelChoices.Superior)
     military_Service_Type = models.CharField(db_column='military_service_type', max_length=100)
     age = models.PositiveIntegerField(db_column='age', blank=False)
+
+class GroupModel(models.Model):
+    name = models.CharField(max_length = 50)
+    students = models.ManyToManyField(Student, db_column='group_students')
