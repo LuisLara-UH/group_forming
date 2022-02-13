@@ -1,6 +1,7 @@
 from django.db import models
 from .model_choices import *
 
+
 class Student(models.Model):
     identity_Number = models.CharField(db_column='identity_number', max_length=100, blank=False)
     name = models.CharField(db_column='name', max_length=100, blank=False)
