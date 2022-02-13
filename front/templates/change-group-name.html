@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card-body">
+    <h4>Change Group Name</h4>
+    <form method="post">
+        {% csrf_token %}
+        <div class='form-group'>
+            <label for="name">Group Name</label>
+            <input type="text" name="name" id="name" value="{{form.name}}" />
+        </div>
+        
+        <a type="button" class="btn btn-danger" href="{%url 'group-list' %}">Cancel</a>
+        <button type="submit" class="btn btn-success">Accept</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,9 +1,8 @@
 from django.shortcuts import render, redirect
-from .models import Student
-from .forms import StudentForm
+from .models import *
+from .forms import *
 from .utils import import_excel_file
 from .services import *
-
 
 def home(request):
     # TODO: Fill this view with the initial page
@@ -58,4 +57,27 @@ def upload_file(request):
     excel_file = request.FILES["excel_file"]
     import_excel_file(excel_file)
 
-    return redirect('student-list') 
+    return redirect('student-list')
+
+##########################Groups###############################################
+def group_list(request):
+    groups = GroupModel.objects.all()
+    groupsView = []
+    for g in groups:
+        groupsView.append({'group':g, 'countStudents':len(g.students.all())})
+    
+    return render(request, 'group-list.html', {'groups':groupsView})
+
+def change_group_name(request, id):
+    group = GroupModel.objects.get(id=id)
+    form = {'name':group.name}
+    if request.method == "POST":  
+        new_name = request.POST['name']
+        if new_name != '':  
+            try:  
+                group.name = new_name
+                group.save()
+                return redirect('group-list')  
+            except Exception as e: 
+                print("que ha pasao")  
+    return render(request, 'change-group-name.html', {'form': form})

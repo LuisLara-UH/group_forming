@@ -8,4 +8,6 @@ urlpatterns = [
     path('student-update/<int:id>', views.student_update, name='student-update'),
     path('student-delete/<int:id>', views.student_delete, name='student-delete'),
     path('upload-file', views.upload_file, name='upload-file'),
+    path('group-list', views.group_list, name='group-list'),
+    path('change-group-name/<int:id>', views.change_group_name, name='change-group-name'),
 ]

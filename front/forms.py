@@ -1,7 +1,7 @@
 import datetime
 
 from django.forms import ModelForm, DateInput
-from .models import Student
+from .models import *
 import django.forms as forms
 
 
@@ -15,3 +15,8 @@ class StudentForm(ModelForm):
             'es_Income_Date': forms.SelectDateWidget(years=range(1990, 2022)),
             'ces_Income_Date': forms.SelectDateWidget(years=range(1990, 2022)),
         }
+
+class GroupForm(ModelForm):
+    class Meta:
+        model = GroupModel
+        fields = '__all__'

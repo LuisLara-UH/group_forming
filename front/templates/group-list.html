@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<div class="card-body">
+    <h4>Group List</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Group Name</th>
+                <th scope="col">Cant of Student</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for group in groups %}
+            <tr>
+                <td>{{ group.group.name}}</td>
+                <td>{{ group.countStudents }}</td>
+                <td><a  href="/change-group-name/{{group.group.id}}">Change Group Name</a></td>
+                <td ><a href="#">Add or remove students from this group</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>    
+
+{% endblock %}
