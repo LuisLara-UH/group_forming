@@ -1,6 +1,7 @@
 import openpyxl
 from .models import Student
 
+
 def import_excel_file(file):
     # TODO (OPTIONAL): put validations
 
