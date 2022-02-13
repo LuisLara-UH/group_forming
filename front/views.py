@@ -90,6 +90,26 @@ def delete_group(request, id):
         pass
     return redirect('group-list')
 
+def group_students(request, id):
+    group = GroupModel.objects.get(id=id)
+    all_students = Student.objects.all()
+    groupStudents = group.students.all()
+    
+    studentsIn, studentsOut = get_students_group(groupStudents, all_students)
+    return render(request, 'group-students.html', {'group':group, 'studentsIn':studentsIn, 'studentsOut':studentsOut})
+
+def add_student_to_group(request, id_group, id_student):
+    group = GroupModel.objects.get(id = id_group)
+    student = Student.objects.get(id = id_student)
+    group.students.add(student)
+    return redirect('group-students', id=group.id)
+
+def remove_student_to_group(request, id_group, id_student):
+    group = GroupModel.objects.get(id = id_group)
+    student = Student.objects.get(id = id_student)
+    group.students.remove(student)
+    return redirect('group-students', id=group.id)
+
 
 def change_group_name(request, id):
     group = GroupModel.objects.get(id=id)
