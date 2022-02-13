@@ -76,7 +76,6 @@ def group_list(request):
     return render(request, 'group-list.html', {'groups': groups_view})
 
 
-
 def create_group(request):
     if request.method == "POST":  
         group_name = request.POST['name']
@@ -84,38 +83,47 @@ def create_group(request):
             try:  
                 new_group = GroupModel(name = group_name)
                 new_group.save()
-                return redirect('group-list')  
-            except:  
-                pass  
+                return redirect('group-list')
+            except Exception as e:
+                print("There was an exception creating the group: " + e)
 
     return render(request, 'create-group.html')
+
 
 def delete_group(request, id):
     group = GroupModel.objects.get(id=id)
     try:
         group.delete()
-    except:
-        pass
+    except Exception as e:
+        print("There was an exception deleting the group: " + e)
+
     return redirect('group-list')
+
 
 def group_students(request, id):
     group = GroupModel.objects.get(id=id)
     all_students = Student.objects.all()
-    groupStudents = group.students.all()
+    group_students = group.students.all()
     
-    studentsIn, studentsOut = get_students_group(groupStudents, all_students)
-    return render(request, 'group-students.html', {'group':group, 'studentsIn':studentsIn, 'studentsOut':studentsOut})
+    students_in, students_out = get_students_group(group_students, all_students)
+
+    return render(request, 'group-students.html',
+                  {'group': group, 'studentsIn': students_in, 'studentsOut': students_out})
+
 
 def add_student_to_group(request, id_group, id_student):
-    group = GroupModel.objects.get(id = id_group)
-    student = Student.objects.get(id = id_student)
+    group = GroupModel.objects.get(id=id_group)
+    student = Student.objects.get(id=id_student)
     group.students.add(student)
+
     return redirect('group-students', id=group.id)
 
+
 def remove_student_to_group(request, id_group, id_student):
-    group = GroupModel.objects.get(id = id_group)
-    student = Student.objects.get(id = id_student)
+    group = GroupModel.objects.get(id=id_group)
+    student = Student.objects.get(id=id_student)
     group.students.remove(student)
+
     return redirect('group-students', id=group.id)
 
 

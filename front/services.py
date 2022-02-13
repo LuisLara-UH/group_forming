@@ -52,14 +52,15 @@ def filter_students(student_list, property: str):
 def group_students(student_list, property: str):
     pass
 
-def get_students_group(groupStudents, all_students):
-    studentsIn = []
-    studentsOut = []
+
+def get_students_group(group_students, all_students):
+    students_in = []
+    students_out = []
 
     for s in all_students:
-        if s in groupStudents:
-            studentsIn.append(s)
+        if s in group_students:
+            students_in.append(s)
         else:
-            studentsOut.append(s)
+            students_out.append(s)
 
-    return (studentsIn, studentsOut)
+    return students_in, students_out
