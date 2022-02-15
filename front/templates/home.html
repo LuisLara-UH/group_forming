@@ -1,7 +1,12 @@
 <!-- TODO: Fill this view -->
 
-<h1>This is the home page</h1>
-<h2>Hello {{ name }}</h2>
-<a href={% url 'student-list' %}>Students</a>
-<br/>
-<a href={% url 'group-list' %}>Groups</a>
+{% extends "base.html" %}
+{% block content %}
+
+<!-- <tu codigo aquí> -->
+    
+    <a href={% url 'student-list' %}>Students</a>
+    <br/>
+    <a href={% url 'group-list' %}>Groups</a>
+
+{% endblock %}
