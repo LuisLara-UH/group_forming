@@ -14,7 +14,6 @@ def get_student_form(student: Student):
         'state': student.state,
         'address': student.address,
         'birth_Date': student.birth_Date,
-        'group': student.group,
         'career': student.career,
         'faculty': student.faculty,
         'course_Type': student.course_Type,
