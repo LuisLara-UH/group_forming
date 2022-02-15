@@ -1,4 +1,4 @@
-from .models import Student
+from .models import Student, GroupModel
 from .forms import StudentForm
 
 
@@ -48,11 +48,6 @@ def filter_students(student_list, property: str):
     pass
 
 
-# TODO: fill grouping
-def group_students(student_list, property: str):
-    pass
-
-
 def get_students_group(group_students, all_students):
     students_in = []
     students_out = []
@@ -64,3 +59,21 @@ def get_students_group(group_students, all_students):
             students_out.append(s)
 
     return students_in, students_out
+
+
+from pulp import *
+import numpy as np
+
+
+# TODO: fill grouping
+def group_students(student_list: [Student], group_list: [GroupModel], property: str):
+    students_amount = len(student_list)
+    groups_amount = len(group_list)
+
+    model = LpProblem("Group forming optimization", LpMinimize)
+
+    variable_indices = [str(i) + str(j) for i in range(1, students_amount + 1) for j in range(1, groups_amount + 1)]
+    decision_vars = LpVariable.matrix("X", variable_indices, cat="Binary")
+
+    obj_func = lpSum(tonne_gains[i] * product_cellar[i, j] for i in range(n_products) for j in range(n_cellars))
+    model += obj_func
