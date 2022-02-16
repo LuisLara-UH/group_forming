@@ -66,8 +66,8 @@ def optimize(request):
         students = []
         for idS in id_students:
             students.append(Student.objects.get(id=idS))
-        
-        result = group_students(students, cant_groups, prop)
+        print(prop)
+        result = group_students(students, int(cant_groups), prop)
         print(str(result))
         return redirect('student-list')
 

@@ -82,7 +82,7 @@ var fieldsOptimize = document.getElementById('fieldOptimize')
 var keysFields = Object.keys(columnsToFields)
 for(let i = 0; i < keysFields.length; i++)
 {
-    fieldsOptimize.innerHTML += `<option value=${keysFields[i]}>${columnsToFields[keysFields[i]]}</option>`
+    fieldsOptimize.innerHTML += `<option value=${columnsToFields[keysFields[i]]}>${keysFields[i]}</option>`
 }
 
 var columnTypeToHtml=
