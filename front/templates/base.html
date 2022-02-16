@@ -11,6 +11,7 @@
         .topnav {
           overflow: hidden;
           background-color: #333;
+          margin: 0;
         }
         
         .topnav a {
@@ -31,12 +32,27 @@
           background-color: #3089ca;
           color: white;
         }
+
+        .logo-div{
+          padding: 5 5;
+        }
+
+        .logo {
+          height: 40px;
+          /* width: auto; */
+          padding: 0;
+          margin: 0;
+        }
         </style>
         </head>
         <body>
         
         <div class="topnav">
-          <a class="active" href="#home">Inicio</a>
+          <a class="logo-div"><img class="active logo"
+            src="../static/Matcom-oficial.png"
+            href="./"
+          ></a>
+          <a class="active" href="./">Inicio</a>
           <a href={% url 'student-list' %}>Estudiantes</a>
           <a href={% url 'group-list' %}>Grupos</a>
           <!-- <a href="#about">About</a> -->
