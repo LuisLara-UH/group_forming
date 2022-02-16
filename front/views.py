@@ -3,7 +3,7 @@ from .models import *
 from .forms import *
 from .utils import *
 from .services import *
-
+import json
 
 def home(request):
     # TODO: Fill this view with the initial page
@@ -56,6 +56,15 @@ def student_delete(request, id):
         print("There was an exception deleting the student: " + str(e))
 
     return redirect('student-list')
+
+def optimize(request):
+    if request.method == "POST":
+        data = json.loads(request.body.decode('utf-8'))
+        cant_groups =data['cant_groups']
+        id_students =data['id_students']
+        prop = data['property']
+        print(str(cant_groups) + "\n" + str(id_students) + "\n "  + str(prop))
+        return redirect('student-list')
 
 
 """Upload Files"""
