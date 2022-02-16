@@ -1,5 +1,7 @@
 from .models import Student, GroupModel
 from .forms import StudentForm
+from pulp import *
+import numpy as np
 
 
 def get_student_form(student: Student):
@@ -14,7 +16,6 @@ def get_student_form(student: Student):
         'state': student.state,
         'address': student.address,
         'birth_Date': student.birth_Date,
-        'group': student.group,
         'career': student.career,
         'faculty': student.faculty,
         'course_Type': student.course_Type,
@@ -61,12 +62,7 @@ def get_students_group(group_students, all_students):
     return students_in, students_out
 
 
-from pulp import *
-import numpy as np
-
-
-# TODO: fill grouping
-def group_students(student_list: [Student], group_list: [GroupModel], property: str):
+def group_students(student_list: [Student], group_list: [GroupModel], field: str) -> [(Student, GroupModel)]:
     students_amount = len(student_list)
     groups_amount = len(group_list)
 
@@ -74,6 +70,51 @@ def group_students(student_list: [Student], group_list: [GroupModel], property: 
 
     variable_indices = [str(i) + str(j) for i in range(1, students_amount + 1) for j in range(1, groups_amount + 1)]
     decision_vars = LpVariable.matrix("X", variable_indices, cat="Binary")
+    decision_vars = np.array(decision_vars).reshape(students_amount, groups_amount)
 
-    obj_func = lpSum(tonne_gains[i] * product_cellar[i, j] for i in range(n_products) for j in range(n_cellars))
-    model += obj_func
+    model += grouping_value(student_list, field, decision_vars, groups_amount)
+    for i in range(students_amount):
+        model += lpSum(decision_vars[i, j] for j in range(groups_amount)) == 1
+
+    for j in range(group_list):
+        model += lpSum(decision_vars[i, j] for i in range(students_amount)) >= (students_amount / groups_amount) - 1
+
+    model.solve()
+
+    res = []
+    for i in range(students_amount):
+        for j in range(groups_amount):
+            if decision_vars[i, j].varValue == 1:
+                res.append((student_list[i], group_list[j]))
+
+    return res
+
+
+def grouping_value(student_list: [Student], field: str, decision_vars, groups_amount: int):
+    # Assign values to strings
+    string_number_val = {str: int}
+    number_val_count = 1
+    for student in student_list:
+        field_value = student.__dict__[field]
+        try:
+            string_number_val[field_value]
+        except KeyError:
+            string_number_val[field_value] = number_val_count
+            number_val_count += 1
+
+    # Find mean for each group
+    groups_mean = []
+    for j in range(groups_amount):
+        students_amount = 0
+        values_count = 0
+        for i in range(len(student_list)):
+            if decision_vars[i, j] == 1:
+                students_amount += 1
+                student_field_value = string_number_val[student_list[i].__dict__[field]]
+                values_count += student_field_value
+
+        groups_mean.append(values_count / students_amount)
+
+    groups_mean.sort()
+
+    return groups_mean[-1] - groups_mean[0]

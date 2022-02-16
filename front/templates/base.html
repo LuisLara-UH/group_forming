@@ -51,11 +51,10 @@
           <a class="logo-div"><img class="active logo"
             src="../static/Matcom-oficial.png"
             href="./"
-          ></a>
-          <a class="active" href="./">Inicio</a>
-          <a href={% url 'student-list' %}>Estudiantes</a>
-          <a href={% url 'group-list' %}>Grupos</a>
-          <!-- <a href="#about">About</a> -->
+          ></a>  
+          <a id="home" class="active" href="/">Inicio</a>
+          <a id="students" href={% url 'student-list' %}>Estudiantes</a>
+          <a id="groups" href={% url 'group-list' %}>Grupos</a>
         </div>
         
         </body>
