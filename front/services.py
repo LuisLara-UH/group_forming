@@ -76,7 +76,7 @@ def group_students(student_list: [Student], groups_amount: int, field: str) -> [
         model += lpSum(decision_vars[i, j] for j in range(groups_amount)) == 1
 
     for j in range(groups_amount):
-        model += lpSum(decision_vars[i, j] for i in range(students_amount)) >= (students_amount / groups_amount) - 1
+        model += lpSum(decision_vars[i, j] for i in range(students_amount)) >= int(students_amount / groups_amount)
 
     model.solve()
 
