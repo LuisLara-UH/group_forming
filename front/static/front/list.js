@@ -38,6 +38,53 @@ var modelColumnsType =
     'Military Service Type':'text'
 }
 
+var columnsToFields = 
+{
+    'Name':'name',
+    'Last Name':'last_Name',
+    'Identity Number':'identity_Number',
+    'Age':'age',
+    'Country':'country',
+    'Province':'province',
+    'Municipality':'municipality',
+    'Situation':'situation',
+    'State':'state',
+    'Address':'address',
+    'Birth Date':'birth_Date',
+    'Group':'group',
+    'Career':'career',
+    'Faculty':'faculty',
+    'Course Type':'course_Type',
+    'Email':'mail',
+    'Source of Income':'source_of_Income',
+    'Academic Origin':'academic_Origin',
+    'Study Regimen':'study_Regimen',
+    'Natural From':'natural_From',
+    'Phone Number':'phone_Number',
+    'ES Income Date':'es_Income_Date',
+    'Civil State':'civil_State',
+    'Political Organization':'political_Organization',
+    'CES Income Date':'ces_Income_Date',
+    'Enrollment Date':'enrollment_Date',
+    'Sex':'sex',
+    'Skin Color':'skin_Color',
+    'Student Type':'student_Type',
+    'Study Year':'study_Year',
+    'Work Center':'work_Center',
+    'Fathers Name':'fathers_Name',
+    'Fathers Academic Level':'fathers_Academic_Level',
+    'Mothers Name':'mothers_Name',
+    'Mothers Academic Level':'mothers_Academic_Level',
+    'Military Service Type':'military_Service_Type'
+}
+
+var fieldsOptimize = document.getElementById('fieldOptimize')
+var keysFields = Object.keys(columnsToFields)
+for(let i = 0; i < keysFields.length; i++)
+{
+    fieldsOptimize.innerHTML += `<option value=${keysFields[i]}>${columnsToFields[keysFields[i]]}</option>`
+}
+
 var columnTypeToHtml=
 {
     'text':`<input type="text" onChange="changeFilterValue"/>`,
@@ -57,6 +104,7 @@ var ths = trs[0].getElementsByTagName("th")
 var initialColumns = ['Identity Number', 'Name', 'Last Name', 'Age', 'Province', 'Municipality']
 var columnsOn = []
 var columnsOut = []
+var checked = {}
 for(let i = 0; i< ths.length; i++)
 {
     if(!initialColumns.includes(ths[i].innerHTML))
@@ -83,6 +131,7 @@ for(let i = 1; i < trs.length; i++)
         
     }
     students.push(s)
+    checked[s.id] = false
 }
 
 function updateColumnsAddRemove()
@@ -146,6 +195,7 @@ function udpateTable()
     tBody.innerHTML = ''
 
     let trHead = tHead.getElementsByTagName('tr')[0]
+    trHead.innerHTML += `<th class="noParse" scope="col"></th>`
 
     for(let i = 0; i < columnsOn.length; i++)
         trHead.innerHTML += `<th scope="col">${columnsOn[i]}</th>`
@@ -153,7 +203,9 @@ function udpateTable()
     for(let j = 0; j < students.length; j++)
     {
         trBody = document.createElement('tr');
-
+        trBody.innerHTML += `<td class="noParse">
+        <input id='${students[j].id}' type="checkbox" onChange="checkStudent(${students[j].id})"/>
+     </td>`
         for(let i = 0; i < columnsOn.length; i++)
             trBody.innerHTML += ` <td>${students[j][columnsOn[i]]}</td>`
 
@@ -161,7 +213,9 @@ function udpateTable()
         <a type="button" class="btn btn-danger" href="/student-delete/${students[j].id}">Eliminar</a>
     </td>`
         tBody.appendChild(trBody)
-        
+    
+    if(checked[students[j].id])    
+        document.getElementById(`${students[j].id}`).checked=1
     }
 }
 
@@ -204,6 +258,40 @@ function removeFilter(element)
     filtersContainer.removeChild(element.parentNode)
 }
 
+function checkStudent(id)
+{
+    checked[id] = !checked[id]
+}
+
+function optimize()
+{
+    var cant_groups = document.getElementById('postCantGroups').value
+    var property = document.getElementById('fieldOptimize').value
+    var id_students = []
+    const csrftoken = getCookie('csrftoken')
+    for(let i = 0; i < students.length; i++)
+    {
+        if(checked[students[i].id])
+            id_students.push(Number(students[i].id))
+    }
+
+    fetch('/optimize', 
+    {
+        method:'POST',
+        body: JSON.stringify({
+            cant_groups:cant_groups,
+            id_students:id_students,
+            property:property
+        }),
+        headers:
+        {
+            'Content-Type':'application/json',
+            'X-CSRFToken': csrftoken
+        }
+    })
+}
 
 updateColumnsAddRemove()
 udpateTable()
+
+function getCookie(name) { var cookieValue = null; if (document.cookie && document.cookie !== '') { var cookies = document.cookie.split(';'); for (var i = 0; i < cookies.length; i++) { var cookie = cookies[i].trim(); if (cookie.substring(0, name.length + 1) === (name + '=')) { cookieValue = decodeURIComponent(cookie.substring(name.length + 1)); break; } } } return cookieValue; }
