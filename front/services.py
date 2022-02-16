@@ -62,9 +62,8 @@ def get_students_group(group_students, all_students):
     return students_in, students_out
 
 
-def group_students(student_list: [Student], group_list: [GroupModel], field: str) -> [(Student, GroupModel)]:
+def group_students(student_list: [Student], groups_amount: int, field: str) -> [(Student, GroupModel)]:
     students_amount = len(student_list)
-    groups_amount = len(group_list)
 
     model = LpProblem("Group forming optimization", LpMinimize)
 
@@ -76,16 +75,16 @@ def group_students(student_list: [Student], group_list: [GroupModel], field: str
     for i in range(students_amount):
         model += lpSum(decision_vars[i, j] for j in range(groups_amount)) == 1
 
-    for j in range(group_list):
+    for j in range(groups_amount):
         model += lpSum(decision_vars[i, j] for i in range(students_amount)) >= (students_amount / groups_amount) - 1
 
     model.solve()
 
-    res = []
+    res = [[] for _ in range(groups_amount)]
     for i in range(students_amount):
         for j in range(groups_amount):
             if decision_vars[i, j].varValue == 1:
-                res.append((student_list[i], group_list[j]))
+                res[j].append(student_list[i])
 
     return res
 
