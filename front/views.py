@@ -63,7 +63,12 @@ def optimize(request):
         cant_groups =data['cant_groups']
         id_students =data['id_students']
         prop = data['property']
-        print(str(cant_groups) + "\n" + str(id_students) + "\n "  + str(prop))
+        students = []
+        for idS in id_students:
+            students.append(Student.objects.get(id=idS))
+        
+        result = group_students(students, cant_groups, prop)
+        print(str(result))
         return redirect('student-list')
 
 
@@ -112,7 +117,7 @@ def delete_group(request, id):
     return redirect('group-list')
 
 
-def group_students(request, id):
+def group_students_view(request, id):
     group = GroupModel.objects.get(id=id)
     all_students = Student.objects.all()
     group_students = group.students.all()
