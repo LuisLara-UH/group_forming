@@ -94,7 +94,7 @@ def group_students(student_list: [Student], groups_amount: int, field: str) -> [
 
 def get_values(student_list: [Student], field: str, decision_vars, groups_amount: int, model):
     string_number_val = {str: int}
-    number_val_count = 1
+    number_val_count = 20
     result = []
     for student in student_list:
         field_value = student.__dict__[field]
@@ -107,7 +107,7 @@ def get_values(student_list: [Student], field: str, decision_vars, groups_amount
                 string_number_val[field_value] = datetime.fromtimestamp(field_value)
             else:
                 string_number_val[field_value] = number_val_count
-                number_val_count += 1
+                number_val_count += 20
 
         result.append(string_number_val[field_value])
     return result
