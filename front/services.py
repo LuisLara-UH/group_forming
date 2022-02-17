@@ -2,6 +2,8 @@ from .models import Student, GroupModel
 from .forms import StudentForm
 from pulp import *
 import numpy as np
+from datetime import datetime
+from gekko import GEKKO
 
 
 def get_student_form(student: Student):
@@ -62,35 +64,36 @@ def get_students_group(group_students, all_students):
     return students_in, students_out
 
 
-def group_students(student_list: [Student], group_list: [GroupModel], field: str) -> [(Student, GroupModel)]:
+def group_students(student_list: [Student], groups_amount: int, field: str) -> [(Student, GroupModel)]:
     students_amount = len(student_list)
-    groups_amount = len(group_list)
 
-    model = LpProblem("Group forming optimization", LpMinimize)
+    model = GEKKO(remote=False)
 
-    variable_indices = [str(i) + str(j) for i in range(1, students_amount + 1) for j in range(1, groups_amount + 1)]
-    decision_vars = LpVariable.matrix("X", variable_indices, cat="Binary")
-    decision_vars = np.array(decision_vars).reshape(students_amount, groups_amount)
+    # Initialize variables
+    decision_vars = [model.Var(lb=0, ub=1, integer=True) for _ in range(students_amount) for _ in range(groups_amount)]
+    decision_vars = np.array(decision_vars).reshape((students_amount, groups_amount))
 
-    model += grouping_value(student_list, field, decision_vars, groups_amount)
+    # Equations
     for i in range(students_amount):
-        model += lpSum(decision_vars[i, j] for j in range(groups_amount)) == 1
+        model.Equation(model.sum([decision_vars[i, j] for j in range(groups_amount)]) == 1)
 
-    for j in range(group_list):
-        model += lpSum(decision_vars[i, j] for i in range(students_amount)) >= (students_amount / groups_amount) - 1
+    for j in range(groups_amount):
+        model.Equation(model.sum([decision_vars[i, j] for i in range(students_amount)]) >= int(students_amount / groups_amount))
 
+    model.Obj(grouping_value(student_list, field, decision_vars, groups_amount, model))  # Objective
     model.solve()
 
-    res = []
+    res = [[] for _ in range(groups_amount)]
     for i in range(students_amount):
         for j in range(groups_amount):
-            if decision_vars[i, j].varValue == 1:
-                res.append((student_list[i], group_list[j]))
+            if decision_vars[i, j].value == [1.0]:
+                res[j].append(student_list[i])
 
+    print(decision_vars)
     return res
 
 
-def grouping_value(student_list: [Student], field: str, decision_vars, groups_amount: int):
+def grouping_value(student_list: [Student], field: str, decision_vars, groups_amount: int, model):
     # Assign values to strings
     string_number_val = {str: int}
     number_val_count = 1
@@ -99,22 +102,22 @@ def grouping_value(student_list: [Student], field: str, decision_vars, groups_am
         try:
             string_number_val[field_value]
         except KeyError:
-            string_number_val[field_value] = number_val_count
-            number_val_count += 1
+            if field == "age":
+                string_number_val[field_value] = int(field_value)
+            elif field == "birth_Date" or field == "es_Income_Date" or field == "ces_Income_Date" or field == "enrollment_Date":
+                string_number_val[field_value] = datetime.fromtimestamp(field_value)
+            else:
+                string_number_val[field_value] = number_val_count
+                number_val_count += 1
 
     # Find mean for each group
-    groups_mean = []
+    group_values = [[] for _ in range(groups_amount)]
     for j in range(groups_amount):
-        students_amount = 0
-        values_count = 0
-        for i in range(len(student_list)):
-            if decision_vars[i, j] == 1:
-                students_amount += 1
-                student_field_value = string_number_val[student_list[i].__dict__[field]]
-                values_count += student_field_value
+        group_values[j] = model.sum([decision_vars[i, j] * string_number_val[student_list[i].__dict__[field]]
+                                for i in range(len(student_list))])
 
-        groups_mean.append(values_count / students_amount)
+    return model.sum([distance(group_values[j - 1], group_values[j]) for j in range(1, groups_amount)])
 
-    groups_mean.sort()
 
-    return groups_mean[-1] - groups_mean[0]
+def distance(val1: int, val2: int):
+    return (val1 - val2)*(val1 - val2)

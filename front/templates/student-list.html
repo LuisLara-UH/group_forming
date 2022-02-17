@@ -23,6 +23,11 @@
 </div>
 
 <h3>Filters</h3>
+<div style="display:flex; align-items:center">
+<p>Create <input id="postCantGroups" type="Number" min='1' style='width:55px' value='1'/> groups with the selected students width the field <select id="fieldOptimize"></select> homogenous</p>
+<input type="button" value="Create" style="height:40px; margin-left:10px" onClick='optimize()'/>
+</div>
+
 <input type="button" value="Add Filter" onClick='addFilter()'/>
 <br/>
 
@@ -37,6 +42,7 @@
     <table class="table">
         <thead>
             <tr>
+                <th class="noParse" scope="col"></th>
                 <th scope="col">Name</th>
                 <th scope="col">Last Name</th>
                 <th scope="col">Identity Number</th>
@@ -77,8 +83,12 @@
             </tr>
         </thead>
         <tbody>
+            
             {% for student in students %}
             <tr>
+                <td class="noParse">
+                   <input type="checkbox" onChange="checkStudent({{student.id}})"/>
+                </td>
                 <td>{{ student.name }}</td>
                 <td>{{ student.last_Name }}</td>
                 <td>{{ student.identity_Number }}</td>
@@ -120,6 +130,7 @@
                     <a type="button" class="btn btn-danger" href="/student-delete/{{ student.id }}">Eliminar</a>
                 </td>
             </tr>
+            
             {% endfor %}
         </tbody>
     </table>

@@ -3,7 +3,7 @@ from .models import *
 from .forms import *
 from .utils import *
 from .services import *
-
+import json
 
 def home(request):
     # TODO: Fill this view with the initial page
@@ -57,6 +57,20 @@ def student_delete(request, id):
 
     return redirect('student-list')
 
+def optimize(request):
+    if request.method == "POST":
+        data = json.loads(request.body.decode('utf-8'))
+        cant_groups =data['cant_groups']
+        id_students =data['id_students']
+        prop = data['property']
+        students = []
+        for idS in id_students:
+            students.append(Student.objects.get(id=idS))
+        print(prop)
+        result = group_students(students, int(cant_groups), prop)
+        print(str(result))
+        return redirect('student-list')
+
 
 """Upload Files"""
 def upload_file(request):
@@ -103,7 +117,7 @@ def delete_group(request, id):
     return redirect('group-list')
 
 
-def group_students(request, id):
+def group_students_view(request, id):
     group = GroupModel.objects.get(id=id)
     all_students = Student.objects.all()
     group_students = group.students.all()
