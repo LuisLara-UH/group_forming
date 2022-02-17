@@ -13,7 +13,7 @@ class Student(models.Model):
 
     def __str__(self):
         try:
-            return self.name + " " + self.last_Name
+            return str(self.age)
         except:
             return 'Desconocido'
 

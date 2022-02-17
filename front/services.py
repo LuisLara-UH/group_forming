@@ -72,7 +72,7 @@ def group_students(student_list: [Student], groups_amount: int, field: str) -> [
     # Initialize variables
     decision_vars = [model.Var(lb=0, ub=1, integer=True) for _ in range(students_amount) for _ in range(groups_amount)]
     decision_vars = np.array(decision_vars).reshape((students_amount, groups_amount))
-
+    values = get_values(student_list, field, decision_vars, groups_amount, model)
     # Equations
     for i in range(students_amount):
         model.Equation(model.sum([decision_vars[i, j] for j in range(groups_amount)]) == 1)
@@ -80,7 +80,7 @@ def group_students(student_list: [Student], groups_amount: int, field: str) -> [
     for j in range(groups_amount):
         model.Equation(model.sum([decision_vars[i, j] for i in range(students_amount)]) >= int(students_amount / groups_amount))
 
-    model.Obj(grouping_value(student_list, field, decision_vars, groups_amount, model))  # Objective
+    model.Obj(function(student_list, field, decision_vars, groups_amount, model, values))  # Objective
     model.solve()
 
     res = [[] for _ in range(groups_amount)]
@@ -92,6 +92,33 @@ def group_students(student_list: [Student], groups_amount: int, field: str) -> [
     print(decision_vars)
     return res
 
+def get_values(student_list: [Student], field: str, decision_vars, groups_amount: int, model):
+    string_number_val = {str: int}
+    number_val_count = 1
+    result = []
+    for student in student_list:
+        field_value = student.__dict__[field]
+        try:
+            string_number_val[field_value]
+        except KeyError:
+            if field == "age":
+                string_number_val[field_value] = int(field_value)
+            elif field == "birth_Date" or field == "es_Income_Date" or field == "ces_Income_Date" or field == "enrollment_Date":
+                string_number_val[field_value] = datetime.fromtimestamp(field_value)
+            else:
+                string_number_val[field_value] = number_val_count
+                number_val_count += 1
+
+        result.append(string_number_val[field_value])
+    return result
+
+def function(student_list: [Student], field: str, decision_vars, groups_amount: int, model, values):
+    group_values = [[] for _ in range(groups_amount)]
+    for j in range(groups_amount):
+        group_values[j] = model.sum([decision_vars[i, j] * values[i]
+                                for i in range(len(student_list))])
+
+    return model.sum([distance(group_values[j - 1], group_values[j]) for j in range(1, groups_amount)])
 
 def grouping_value(student_list: [Student], field: str, decision_vars, groups_amount: int, model):
     # Assign values to strings
