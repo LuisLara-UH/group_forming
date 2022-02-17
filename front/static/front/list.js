@@ -106,8 +106,9 @@ function filterText(field, value)
         if(studentsFiltered[i][field].toLowerCase().indexOf(value.toLowerCase()) !== -1)
             newStudentsFiltered.push(studentsFiltered[i])
         
-        else
-            checked[studentsFiltered[i].id] = false
+        else if(checked[studentsFiltered[i].id])
+            checkStudent(studentsFiltered[i].id)
+            
     }
 
     studentsFiltered = []
@@ -152,6 +153,7 @@ var initialColumns = ['Identity Number', 'Name', 'Last Name', 'Age', 'Province',
 var columnsOn = []
 var columnsOut = []
 var checked = {}
+var cantChecked = 0
 for(let i = 0; i< ths.length; i++)
 {
     if(!initialColumns.includes(ths[i].innerHTML))
@@ -265,6 +267,9 @@ function udpateTable()
     
     if(checked[studentsFiltered[j].id])    
         document.getElementById(`${studentsFiltered[j].id}`).checked=1
+
+    if(cantChecked < studentsFiltered.length)
+        document.getElementById("selectAll").checked=0
     }
 }
 
@@ -327,6 +332,10 @@ function removeFilter(element)
 function checkStudent(id)
 {
     checked[id] = !checked[id]
+    cantChecked += checked[id] ? 1 : -1;
+
+    document.getElementById('selectedStudents').innerHTML = cantChecked + " selected students" 
+
 }
 
 function optimize()
@@ -355,6 +364,20 @@ function optimize()
             'X-CSRFToken': csrftoken
         }
     })
+}
+
+function selectAll(element)
+{
+    for(let i = 0; i < studentsFiltered.length; i++)
+    {
+        if(element.checked && !checked[studentsFiltered[i].id])
+            checkStudent(studentsFiltered[i].id)
+
+        else if(!element.checked && checked[studentsFiltered[i].id])
+            checkStudent(studentsFiltered[i].id)
+    }
+
+    udpateTable()
 }
 
 updateColumnsAddRemove()

@@ -39,6 +39,11 @@
 
 <div class="card-body">
     <h4>Students List</h4>
+    <div style="display:flex">
+        <input type='checkbox' name='allStudents' id="selectAll" onChange='selectAll(this)'/>
+        <label for='allStudents' id="labelSelectAll">select all</label>
+    </div>
+    <p id="selectedStudents">0 selected students</p>
     <table class="table">
         <thead>
             <tr>
