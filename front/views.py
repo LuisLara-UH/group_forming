@@ -69,6 +69,7 @@ def optimize(request):
         print(prop)
         result = group_students(students, int(cant_groups), prop)
         print(str(result))
+        print(age_avg(result))
         return redirect('student-list')
 
 

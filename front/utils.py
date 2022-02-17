@@ -64,3 +64,16 @@ def get_students_from_excel(matrix):
         )
         result.append(student)
     return result
+
+def age_avg(students):
+    result = []
+    len_groups = len(students)
+    for i in range(len_groups):
+        sum = 0
+        len_students = len(students[i])
+        for j in range(len_students):
+            sum += students[i][j].age
+
+        result.append(sum/len_students) 
+
+    return result
