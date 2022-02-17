@@ -87,15 +87,62 @@ for(let i = 0; i < keysFields.length; i++)
 
 var columnTypeToHtml=
 {
-    'text':`<input type="text" onChange="changeFilterValue"/>`,
+    'text':`<input type="text" class="filterInput" onChange="changeFilterValue(this)"/>`,
 
-    'date':` <input class="since" type="date" onChange="changeFilterValue"/>
+    'date':` <input class="since filterInput" type="date" onChange="changeFilterValue(this)"/>
     -
-    <input class="to" type="date" onChange="changeFilterValue"/>`,
+    <input class="to" type="date" onChange="changeFilterValue(this)"/>`,
 
-    'number':`<input class="since" type="Number" onChange="changeFilterValue"/>
+    'number':`<input class="since filterInput" type="Number" onChange="changeFilterValue(this)"/>
     -
-    <input class="to" type="Number" onChange="changeFilterValue"/>`
+    <input class="to" type="Number" onChange="changeFilterValue(this)"/>`
+}
+
+function filterText(field, value)
+{
+    newStudentsFiltered = []
+    for(let i = 0; i < studentsFiltered.length; i++)
+    {
+        if(studentsFiltered[i][field].toLowerCase().indexOf(value.toLowerCase()) !== -1)
+            newStudentsFiltered.push(studentsFiltered[i])
+        
+        else
+            checked[studentsFiltered[i].id] = false
+    }
+
+    studentsFiltered = []
+    for(let i = 0; i < newStudentsFiltered.length; i++)
+        studentsFiltered.push(newStudentsFiltered[i])
+
+    udpateTable()
+}
+
+function filterNumber(field, valueSince, valueTo)
+{
+    
+}
+
+function changeFilterValue(element)
+{
+    let select = element.parentNode.parentNode.getElementsByTagName('select')[0]
+    select.disabled = true
+    
+    switch(element.type.toLowerCase())
+    {
+        case 'text': 
+            filterText(select.value, element.value);
+        break;
+
+        case 'number':
+            let valueSince = element.parentNode.getElementsByClassName('since')[0].value;
+            let valueTo = element.parentNode.getElementsByClassName('to')[0].value;
+            valueSince = valueSince === '' ? 'abc':valueSince;
+            valueTo = valueTo === '' ? 'abc':valueTo; 
+            filterNumber(select.value, Number(valueSince), Number(valueTo));
+        break;  
+
+        default: ''; break;
+    }
 }
 
 var trs = document.getElementsByTagName('tr')
@@ -116,6 +163,7 @@ for(let i = 0; i < initialColumns.length; i++)
 
 console.log(columnsOn)
 var students = []
+var studentsFiltered = []
 
 for(let i = 1; i < trs.length; i++)
 {
@@ -131,6 +179,7 @@ for(let i = 1; i < trs.length; i++)
         
     }
     students.push(s)
+    studentsFiltered.push(s)
     checked[s.id] = false
 }
 
@@ -200,22 +249,22 @@ function udpateTable()
     for(let i = 0; i < columnsOn.length; i++)
         trHead.innerHTML += `<th scope="col">${columnsOn[i]}</th>`
       
-    for(let j = 0; j < students.length; j++)
+    for(let j = 0; j < studentsFiltered.length; j++)
     {
         trBody = document.createElement('tr');
         trBody.innerHTML += `<td class="noParse">
-        <input id='${students[j].id}' type="checkbox" onChange="checkStudent(${students[j].id})"/>
+        <input id='${studentsFiltered[j].id}' type="checkbox" onChange="checkStudent(${studentsFiltered[j].id})"/>
      </td>`
         for(let i = 0; i < columnsOn.length; i++)
-            trBody.innerHTML += ` <td>${students[j][columnsOn[i]]}</td>`
+            trBody.innerHTML += ` <td>${studentsFiltered[j][columnsOn[i]]}</td>`
 
-        trBody.innerHTML += `<td style="display:flex"><a type="button" class="btn btn-warning" href="/student-update/${students[j].id}">Editar</a>
-        <a type="button" class="btn btn-danger" href="/student-delete/${students[j].id}">Eliminar</a>
+        trBody.innerHTML += `<td style="display:flex"><a type="button" class="btn btn-warning" href="/student-update/${studentsFiltered[j].id}">Editar</a>
+        <a type="button" class="btn btn-danger" href="/student-delete/${studentsFiltered[j].id}">Eliminar</a>
     </td>`
         tBody.appendChild(trBody)
     
-    if(checked[students[j].id])    
-        document.getElementById(`${students[j].id}`).checked=1
+    if(checked[studentsFiltered[j].id])    
+        document.getElementById(`${studentsFiltered[j].id}`).checked=1
     }
 }
 
@@ -242,7 +291,7 @@ function addFilter()
     
     filterItem.appendChild(selectFilter)
     filterItem.innerHTML += ` <div class="valueContainer" style="display:flex"> 
-    <input type="text" onChange="changeFilterValue"/>
+    <input type="text" class="filterInput" onChange="changeFilterValue(this)"/>
     </div>
     <div class="buttonRemove" onClick='removeFilter(this)'>-</div>`
     filterItem.addEventListener
@@ -256,6 +305,23 @@ function removeFilter(element)
 {
     let filtersContainer = document.getElementById('filtersContainer');
     filtersContainer.removeChild(element.parentNode)
+
+    studentsFiltered = []
+    for(let i = 0; i < students.length; i++)
+        studentsFiltered.push(students[i])
+
+    let filterInputs = document.getElementsByClassName('filterInput');
+    console.log(filterInputs)
+    for(i = 0; i < filterInputs.length; i++)
+    {
+        changeFilterValue(filterInputs[i])
+    }
+
+    if(filterInputs.length == 0)
+    {
+        udpateTable()
+    }
+
 }
 
 function checkStudent(id)
