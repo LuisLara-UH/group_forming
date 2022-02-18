@@ -1,13 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
 {% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'front/styles.css' %}"/>
+
 <div class="card-body">
     <h5>Crear Nuevo Estudiante</h5>
     <form method="post">
         {% csrf_token %}
         {{form.as_p}}
         <a type="button" class="btn btn-danger" href="{%url 'student-list' %}">Cancelar</a>
-        <button type="submit" class="btn btn-success">Aceptar</button>
+        <button type="submit" class="btn btn-success primary-color">Aceptar</button>
     </form>
 </div>
 

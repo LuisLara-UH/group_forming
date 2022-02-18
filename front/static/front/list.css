@@ -7,7 +7,6 @@
 
 #removeColumnsContainer, #addColumnsContainer
 {
-    width: 100vw;
     flex-wrap: wrap;
 }
 
@@ -43,7 +42,7 @@
 
 .buttonAdd
 {
-    background: green;
+    background: 3089ca;
 }
 
 .buttonRemove

@@ -7,50 +7,34 @@
 <link rel="stylesheet" type="text/css" href="{% static 'front/styles.css' %}"/>
 
 
-<!-- <tu codigo aquí> -->
-    <style>
-      body::after {
-        content: "";
-        background-image: url('../static/bnw-background.jpeg');
-        position: absolute;
-        z-index: -1;  
-        opacity: 0.3;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-      }
-    </style>
+<div style="margin-top: 3%; position:relative; display: block;">
+  <div style="position:relative; display: block;">
+    <p id="title-style">Formación de Grupos</p>
+    <p id="subtitle-style"> 
+      Sitio para formar distribución de grupos apoyado en Algoritmos de Optimización</p>
+  </div>
 
-
-    <div style="margin-top: 3%; position:relative; display: block;">
-      <div style="position:relative; display: block;">
-        <p id="title-style">Formación de Grupos</p>
-        <p id="subtitle-style"> 
-          Sitio para formar distribución de grupos apoyado en Algoritmos de Optimización</p>
+  <div class="center; position:relative; display: block;">
+    <div class="row">
+      <div class="column">
+        <a href={% url 'student-list' %}>
+          <div class="card">
+            <img src="../static/students.png" alt="students">
+            <p>Lista de Estudiantes</p>
+          </div>
+        </a>
       </div>
 
-      <div class="center; position:relative; display: block;">
-        <div class="row">
-          <div class="column">
-            <a href={% url 'student-list' %}>
-              <div class="card">
-                <img src="../static/students.png" alt="students">
-                <p>Lista de Estudiantes</p>
-              </div>
-            </a>
+      <div class="column">
+        <a href={% url 'group-list' %}>
+          <div class="card">
+            <img src="../static/class1.jpeg" alt="students">
+            <p>Lista de Grupos</p>
           </div>
-
-          <div class="column">
-            <a href={% url 'group-list' %}>
-              <div class="card">
-                <img src="../static/class1.jpeg" alt="students">
-                <p>Lista de Grupos</p>
-              </div>
-            </a>
-          </div>
+        </a>
       </div>
-    </div>
+  </div>
+</div>
 
 
 
