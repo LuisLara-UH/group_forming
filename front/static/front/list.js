@@ -82,6 +82,7 @@ var fieldsOptimize = document.getElementById('fieldOptimize')
 var keysFields = Object.keys(columnsToFields)
 for(let i = 0; i < keysFields.length; i++)
 {
+    if(modelColumnsType[keysFields[i]] != 'date')
     fieldsOptimize.innerHTML += `<option value=${columnsToFields[keysFields[i]]}>${keysFields[i]}</option>`
 }
 
@@ -120,13 +121,34 @@ function filterText(field, value)
 
 function filterNumber(field, valueSince, valueTo)
 {
+    if(isNaN(valueSince) || isNaN(valueTo))
+        return;
+
+        newStudentsFiltered = []
+        for(let i = 0; i < studentsFiltered.length; i++)
+        {
+            let age = Number(studentsFiltered[i].Age)
+
+            if(!isNaN(age) && valueSince <= age && valueTo >= age)
+                newStudentsFiltered.push(studentsFiltered[i])
+            
+            else if(checked[studentsFiltered[i].id])
+                checkStudent(studentsFiltered[i].id)
+                
+        }
     
+        studentsFiltered = []
+        for(let i = 0; i < newStudentsFiltered.length; i++)
+            studentsFiltered.push(newStudentsFiltered[i])
+    
+        udpateTable()
 }
 
 function changeFilterValue(element)
 {
     let select = element.parentNode.parentNode.getElementsByTagName('select')[0]
     select.disabled = true
+    element.disabled = true
     
     switch(element.type.toLowerCase())
     {
@@ -156,7 +178,7 @@ var checked = {}
 var cantChecked = 0
 for(let i = 0; i< ths.length; i++)
 {
-    if(!initialColumns.includes(ths[i].innerHTML))
+    if(!initialColumns.includes(ths[i].innerHTML) && ths[i].className !== 'noParse')
         columnsOut.push(ths[i].innerHTML)
 }
 
@@ -291,6 +313,7 @@ function addFilter()
     let filtersName = Object.keys(modelColumnsType);
     for(let i = 0; i < filtersName.length; i++)
     {
+        if(modelColumnsType[filtersName[i]] != 'date')
         selectFilter.innerHTML += `<option id=${filtersName[i]}>${filtersName[i]}</option>`
     }
     
@@ -363,7 +386,10 @@ function optimize()
             'Content-Type':'application/json',
             'X-CSRFToken': csrftoken
         }
-    })
+    }).then(m=>
+        {
+            window.location.href = '/group-list'
+        })
 }
 
 function selectAll(element)

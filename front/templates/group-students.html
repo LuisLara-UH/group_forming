@@ -3,10 +3,12 @@
 {% load static %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'front/list.css' %}"/>
+<div>
 <a href={% url 'group-list' %}>Regresa a lista de Grupos</a>
 <h3>Añadir o Remover estudiantes del grupo <span style='color:blue'>{{group.name}}</span></h3>
-<div id="addRemoveColumnsContainer">
-    <div id="addColumnsContainer">
+</div>
+<div style='display:flex; width:80%; margin:0 auto; justify-content:space-between'>
+    <div >
 
         {% for s in studentsOut %}
         <a href="/add-student-to-group/{{group.id}}/{{s.id}}">
@@ -18,7 +20,7 @@
     {% endfor %}
     </div>
 
-    <div id="removeColumnsContainer">
+    <div>
         {% for s in studentsIn %}
         <a href="/remove-student-to-group/{{group.id}}/{{s.id}}">
         <div class="itemRemove">
