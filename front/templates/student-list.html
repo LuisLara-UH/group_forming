@@ -2,9 +2,23 @@
 {% block content %}
 {% load static %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'front/list.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'front/list.css' %}" />
 
 <div style="margin: 2% 3%;">
+    <!-- Button to create new student-->
+    <a style="margin: 1% 0; background-color: 3089ca; border-color: 3089ca;" type="button"
+    class="btn btn-success" href="{%url 'student-create' %}">Crear Nuevo Estudiante</a>
+
+    <!-- Button to upload excel file-->
+    <form action="{% url 'upload-file' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" accept=".xls,.xlsx" title="Upload excel file" name="excel_file"
+            style="border: 1px solid black; padding: 5px;" required="required">
+        <p>
+            <input type="submit" style="margin: 1% 0; background-color: #3089ca; border-color: #3089ca;"
+                class="btn btn-success" value="Subir"
+                style="border: 1px solid #3089ca; padding:5px; border-radius: 2px; cursor: pointer;">
+    </form>
     <h3>Añadir o Remover columna de la tabla</h3>
     <div id="addRemoveColumnsContainer">
         <div id="addColumnsContainer">
@@ -16,156 +30,143 @@
     </div>
 
     <div class="card-body">
-    <table class="table">
-        <div  id="removeColumnsContainer">
-            <div class="itemRemove" onClick='removeColumn(this)'>
-                <div class="buttonRemove">-</div>
-                <p>${Columna}</p>
-            </div>
-        </div>
-
-        <div style="margin: 2% 0;">
-            <h3>Filtros</h3>
-            <div style="display:flex; align-items:center">
-                <p>Crear <input id="postCantGroups" type="Number" min='1' style='width:55px' value='1'/> grupo(s) con estudiantes seleccionados con el campo <select id="fieldOptimize"></select> homogéneo</p>
-                <input type="button" value="Crear" style="height:40px; margin-left:10px" onClick='optimize()'/>
-            </div>
-    
-            <input type="button" value="Añadir Filtro" onClick='addFilter()'/>
-            <br/>
-    
-            <div id="filtersContainer">
-                <div class="filterItem">
-    
+        <table class="table">
+            <div id="removeColumnsContainer">
+                <div class="itemRemove" onClick='removeColumn(this)'>
+                    <div class="buttonRemove">-</div>
+                    <p>${Columna}</p>
                 </div>
             </div>
-        </div>
 
-        <div class="card-body">
-            <h3>Lista de Estudiantes</h3>
+            <div style="margin: 2% 0;">
+                <h3>Filtros</h3>
+                <div style="display:flex; align-items:center">
+                    <p>Crear <input id="postCantGroups" type="Number" min='1' style='width:55px' value='1' /> grupo(s)
+                        con estudiantes seleccionados con el campo <select id="fieldOptimize"></select> homogéneo</p>
+                    <input type="button" value="Crear" style="height:40px; margin-left:10px" onClick='optimize()' />
+                </div>
 
-            <div style="display:flex">
-                <input type='checkbox' name='allStudents' id="selectAll" onChange='selectAll(this)'/>
-                <label for='allStudents' id="labelSelectAll">select all</label>
+                <input type="button" value="Añadir Filtro" onClick='addFilter()' />
+                <br />
+
+                <div id="filtersContainer">
+                    <div class="filterItem">
+
+                    </div>
+                </div>
             </div>
 
-            <p id="selectedStudents">0 selected students</p>
+            <div class="card-body">
 
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th class="noParse" scope="col"></th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Last Name</th>
-                        <th scope="col">Identity Number</th>
-                        <th scope="col">Age</th>
-                        <th scope="col">Country</th>
-                        <th scope="col">Province</th>
-                        <th scope="col">Municipality</th>
-                        <th scope="col">Situation</th>
-                        <th scope="col">State</th>
-                        <th scope="col">Address</th>
-                        <th scope="col">Birth Date</th>
-                        <th scope="col">Group</th>
-                        <th scope="col">Career</th>
-                        <th scope="col">Faculty</th>
-                        <th scope="col">Course Type</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Source of Income</th>
-                        <th scope="col">Academic Origin</th>
-                        <th scope="col">Study Regimen</th>
-                        <th scope="col">Natural From</th>
-                        <th scope="col">Phone Number</th>
-                        <th scope="col">ES Income Date</th>
-                        <th scope="col">Civil State</th>
-                        <th scope="col">Political Organization</th>
-                        <th scope="col">CES Income Date</th>
-                        <th scope="col">Enrollment Date</th>
-                        <th scope="col">Sex</th>
-                        <th scope="col">Skin Color</th>
-                        <th scope="col">Student Type</th>
-                        <th scope="col">Study Year</th>
-                        <th scope="col">Work Center</th>
-                        <th scope="col">Fathers Name</th>
-                        <th scope="col">Fathers Academic Level</th>
-                        <th scope="col">Mothers Name</th>
-                        <th scope="col">Mothers Academic Level</th>
-                        <th scope="col">Military Service Type</th>
 
-                    </tr>
-                </thead>
-                <tbody>
 
-                    {% for student in students %}
-                    <tr>
-                        <td class="noParse">
-                            <input type="checkbox" onChange="checkStudent({{student.id}})"/>
-                        </td>
-                        <td>{{ student.name }}</td>
-                        <td>{{ student.last_Name }}</td>
-                        <td>{{ student.identity_Number }}</td>
-                        <td>{{ student.age }}</td>
-                        <td>{{ student.country }}</td>
-                        <td>{{ student.province }}</td>
-                        <td>{{ student.municipality }}</td>
-                        <td>{{ student.situation }}</td>
-                        <td>{{ student.state }}</td>
-                        <td>{{ student.address }}</td>
-                        <td>{{ student.birth_Date }}</td>
-                        <td>{{ student.group }}</td>
-                        <td>{{ student.career }}</td>
-                        <td>{{ student.faculty }}</td>
-                        <td>{{ student.course_Type }}</td>
-                        <td>{{ student.mail }}</td>
-                        <td>{{ student.source_of_Income }}</td>
-                        <td>{{ student.academic_Origin }}</td>
-                        <td>{{ student.study_Regimen }}</td>
-                        <td>{{ student.natural_From }}</td>
-                        <td>{{ student.phone_Number }}</td>
-                        <td>{{ student.es_Income_Date }}</td>
-                        <td>{{ student.civil_State }}</td>
-                        <td>{{ student.political_Organization }}</td>
-                        <td>{{ student.ces_Income_Date }}</td>
-                        <td>{{ student.enrollment_Date }}</td>
-                        <td>{{ student.sex }}</td>
-                        <td>{{ student.skin_Color }}</td>
-                        <td>{{ student.student_Type }}</td>
-                        <td>{{ student.study_Year }}</td>
-                        <td>{{ student.work_Center }}</td>
-                        <td>{{ student.fathers_Name }}</td>
-                        <td>{{ student.fathers_Academic_Level }}</td>
-                        <td>{{ student.mothers_Name }}</td>
-                        <td>{{ student.mothers_Academic_Level }}</td>
-                        <td>{{ student.military_Service_Type }}</td>
+                <h3>Lista de Estudiantes</h3>
 
-                        <td id='{{student.id}}' style="display:flex; background-color: #fdec96; border-color: #fdec96;"><a type="button" class="btn btn-warning" href="/student-update/{{ student.id }}">Editar</a>
-                            <a type="button" style="background-color: #ff6961; border-color: #ff6961;" class="btn btn-danger" href="/student-delete/{{ student.id }}">Eliminar</a>
-                        </td>
-                    </tr>
+                <div style="display:flex">
+                    <input type='checkbox' name='allStudents' id="selectAll" onChange='selectAll(this)' />
+                    <label for='allStudents' id="labelSelectAll">select all</label>
+                </div>
 
-                    {% endfor %}
-                </tbody>
-            </table>
-            <!-- Button to create new student-->
-            <a style="margin: 1% 0; background-color: 3089ca; border-color: 3089ca;" type="button" class="btn btn-success" href="{%url 'student-create' %}">Crear Nuevo Estudiante</a>
+                <p id="selectedStudents">0 selected students</p>
 
-            <!-- Button to upload excel file-->
-            <form action="{% url 'upload-file' %}" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <input type="file"
-                accept=".xls,.xlsx"
-                title="Upload excel file"
-                name="excel_file"
-                style="border: 1px solid black; padding: 5px;"
-                required="required">
-                <p>
-                    <input type="submit"
-                    style="margin: 1% 0; background-color: 3089ca; border-color: 3089ca;"
-                    class="btn btn-success"
-                    value="Subir"
-                    style="border: 1px solid 3089ca; padding:5px; border-radius: 2px; cursor: pointer;">
-                </form>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="noParse" scope="col"></th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Last Name</th>
+                            <th scope="col">Identity Number</th>
+                            <th scope="col">Age</th>
+                            <th scope="col">Country</th>
+                            <th scope="col">Province</th>
+                            <th scope="col">Municipality</th>
+                            <th scope="col">Situation</th>
+                            <th scope="col">State</th>
+                            <th scope="col">Address</th>
+                            <th scope="col">Birth Date</th>
+                            <th scope="col">Group</th>
+                            <th scope="col">Career</th>
+                            <th scope="col">Faculty</th>
+                            <th scope="col">Course Type</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Source of Income</th>
+                            <th scope="col">Academic Origin</th>
+                            <th scope="col">Study Regimen</th>
+                            <th scope="col">Natural From</th>
+                            <th scope="col">Phone Number</th>
+                            <th scope="col">ES Income Date</th>
+                            <th scope="col">Civil State</th>
+                            <th scope="col">Political Organization</th>
+                            <th scope="col">CES Income Date</th>
+                            <th scope="col">Enrollment Date</th>
+                            <th scope="col">Sex</th>
+                            <th scope="col">Skin Color</th>
+                            <th scope="col">Student Type</th>
+                            <th scope="col">Study Year</th>
+                            <th scope="col">Work Center</th>
+                            <th scope="col">Fathers Name</th>
+                            <th scope="col">Fathers Academic Level</th>
+                            <th scope="col">Mothers Name</th>
+                            <th scope="col">Mothers Academic Level</th>
+                            <th scope="col">Military Service Type</th>
 
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for student in students %}
+                        <tr>
+                            <td class="noParse">
+                                <input type="checkbox" onChange="checkStudent({{student.id}})" />
+                            </td>
+                            <td>{{ student.name }}</td>
+                            <td>{{ student.last_Name }}</td>
+                            <td>{{ student.identity_Number }}</td>
+                            <td>{{ student.age }}</td>
+                            <td>{{ student.country }}</td>
+                            <td>{{ student.province }}</td>
+                            <td>{{ student.municipality }}</td>
+                            <td>{{ student.situation }}</td>
+                            <td>{{ student.state }}</td>
+                            <td>{{ student.address }}</td>
+                            <td>{{ student.birth_Date }}</td>
+                            <td>{{ student.group }}</td>
+                            <td>{{ student.career }}</td>
+                            <td>{{ student.faculty }}</td>
+                            <td>{{ student.course_Type }}</td>
+                            <td>{{ student.mail }}</td>
+                            <td>{{ student.source_of_Income }}</td>
+                            <td>{{ student.academic_Origin }}</td>
+                            <td>{{ student.study_Regimen }}</td>
+                            <td>{{ student.natural_From }}</td>
+                            <td>{{ student.phone_Number }}</td>
+                            <td>{{ student.es_Income_Date }}</td>
+                            <td>{{ student.civil_State }}</td>
+                            <td>{{ student.political_Organization }}</td>
+                            <td>{{ student.ces_Income_Date }}</td>
+                            <td>{{ student.enrollment_Date }}</td>
+                            <td>{{ student.sex }}</td>
+                            <td>{{ student.skin_Color }}</td>
+                            <td>{{ student.student_Type }}</td>
+                            <td>{{ student.study_Year }}</td>
+                            <td>{{ student.work_Center }}</td>
+                            <td>{{ student.fathers_Name }}</td>
+                            <td>{{ student.fathers_Academic_Level }}</td>
+                            <td>{{ student.mothers_Name }}</td>
+                            <td>{{ student.mothers_Academic_Level }}</td>
+                            <td>{{ student.military_Service_Type }}</td>
+
+                            <td id='{{student.id}}'
+                                style="display:flex; background-color: #fdec96; border-color: #fdec96;"><a type="button"
+                                    class="btn btn-warning" href="/student-update/{{ student.id }}">Editar</a>
+                                <a type="button" style="background-color: #ff6961; border-color: #ff6961;"
+                                    class="btn btn-danger" href="/student-delete/{{ student.id }}">Eliminar</a>
+                            </td>
+                        </tr>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
             <script src={% static 'front/list.js' %}></script>
             <script src={% static 'front/active_students.js' %}></script>
