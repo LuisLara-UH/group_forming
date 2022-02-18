@@ -291,6 +291,7 @@ function addFilter()
     let filtersName = Object.keys(modelColumnsType);
     for(let i = 0; i < filtersName.length; i++)
     {
+        if(modelColumnsType[filtersName[i]] != 'date')
         selectFilter.innerHTML += `<option id=${filtersName[i]}>${filtersName[i]}</option>`
     }
     

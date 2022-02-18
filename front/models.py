@@ -13,9 +13,9 @@ class Student(models.Model):
 
     def __str__(self):
         try:
-            return str(self.age)
+            return self.name + " " + self.last_Name
         except:
-            return 'Desconocido'
+            return 'Sin Nombre'
 
     identity_Number = models.CharField(db_column='identity_number', max_length=100, blank=False)
     name = models.CharField(db_column='name', max_length=100, blank=False)
