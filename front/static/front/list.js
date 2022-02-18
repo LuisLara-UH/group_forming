@@ -157,7 +157,7 @@ var checked = {}
 var cantChecked = 0
 for(let i = 0; i< ths.length; i++)
 {
-    if(!initialColumns.includes(ths[i].innerHTML))
+    if(!initialColumns.includes(ths[i].innerHTML) && ths[i].className !== 'noParse')
         columnsOut.push(ths[i].innerHTML)
 }
 
