@@ -68,11 +68,15 @@ def group_students(student_list: [Student], groups_amount: int, field: str) -> [
     students_amount = len(student_list)
 
     model = GEKKO(remote=False)
+    #model.options.MAX_TIME = 60
+    
 
     # Initialize variables
     decision_vars = [model.Var(lb=0, ub=1, integer=True) for _ in range(students_amount) for _ in range(groups_amount)]
     decision_vars = np.array(decision_vars).reshape((students_amount, groups_amount))
     values = get_values(student_list, field, decision_vars, groups_amount, model)
+
+    print("values", values)
     # Equations
     for i in range(students_amount):
         model.Equation(model.sum([decision_vars[i, j] for j in range(groups_amount)]) == 1)
@@ -81,20 +85,22 @@ def group_students(student_list: [Student], groups_amount: int, field: str) -> [
         model.Equation(model.sum([decision_vars[i, j] for i in range(students_amount)]) >= int(students_amount / groups_amount))
 
     model.Obj(function(student_list, field, decision_vars, groups_amount, model, values))  # Objective
-    model.solve()
 
+    
+    model.solve()
+    
     res = [[] for _ in range(groups_amount)]
     for i in range(students_amount):
         for j in range(groups_amount):
             if decision_vars[i, j].value == [1.0]:
                 res[j].append(student_list[i])
 
-    print(decision_vars)
+    
     return res
 
 def get_values(student_list: [Student], field: str, decision_vars, groups_amount: int, model):
     string_number_val = {str: int}
-    number_val_count = 20
+    number_val_count = 500
     result = []
     for student in student_list:
         field_value = student.__dict__[field]
@@ -107,7 +113,7 @@ def get_values(student_list: [Student], field: str, decision_vars, groups_amount
                 string_number_val[field_value] = datetime.fromtimestamp(field_value)
             else:
                 string_number_val[field_value] = number_val_count
-                number_val_count += 20
+                number_val_count += 500
 
         result.append(string_number_val[field_value])
     return result
