@@ -5,7 +5,6 @@
 <link rel="stylesheet" type="text/css" href="{% static 'front/list.css' %}"/>
 
 <div style="margin: 2% 3%;">
-
     <h3>Añadir o Remover columna de la tabla</h3>
     <div id="addRemoveColumnsContainer">
         <div id="addColumnsContainer">
@@ -15,34 +14,35 @@
             </div>
         </div>
     </div>
-</div>
 
-<div class="card-body">
+    <div class="card-body">
     <table class="table">
-        <div id="removeColumnsContainer">
+        <div  id="removeColumnsContainer">
             <div class="itemRemove" onClick='removeColumn(this)'>
                 <div class="buttonRemove">-</div>
                 <p>${Columna}</p>
             </div>
         </div>
 
-        <h3>Filtros</h3>
-        <div style="display:flex; align-items:center">
-            <p>Crear <input id="postCantGroups" type="Number" min='1' style='width:55px' value='1'/> grupo(s) con estudiantes seleccionados con el campo <select id="fieldOptimize"></select> homogéneo</p>
-            <input type="button" value="Crear" style="height:40px; margin-left:10px" onClick='optimize()'/>
-        </div>
-
-        <input type="button" value="Añadir Filtro" onClick='addFilter()'/>
-        <br/>
-
-        <div id="filtersContainer">
-            <div class="filterItem">
-
+        <div style="margin: 2% 0;">
+            <h3>Filtros</h3>
+            <div style="display:flex; align-items:center">
+                <p>Crear <input id="postCantGroups" type="Number" min='1' style='width:55px' value='1'/> grupo(s) con estudiantes seleccionados con el campo <select id="fieldOptimize"></select> homogéneo</p>
+                <input type="button" value="Crear" style="height:40px; margin-left:10px" onClick='optimize()'/>
+            </div>
+    
+            <input type="button" value="Añadir Filtro" onClick='addFilter()'/>
+            <br/>
+    
+            <div id="filtersContainer">
+                <div class="filterItem">
+    
+                </div>
             </div>
         </div>
 
         <div class="card-body">
-            <h4>Lista de Estudiantes</h4>
+            <h3>Lista de Estudiantes</h3>
 
             <div style="display:flex">
                 <input type='checkbox' name='allStudents' id="selectAll" onChange='selectAll(this)'/>
@@ -138,8 +138,8 @@
                         <td>{{ student.mothers_Academic_Level }}</td>
                         <td>{{ student.military_Service_Type }}</td>
 
-                        <td id='{{student.id}}' style="display:flex"><a type="button" class="btn btn-warning" href="/student-update/{{ student.id }}">Editar</a>
-                            <a type="button" class="btn btn-danger" href="/student-delete/{{ student.id }}">Eliminar</a>
+                        <td id='{{student.id}}' style="display:flex; background-color: #fdec96; border-color: #fdec96;"><a type="button" class="btn btn-warning" href="/student-update/{{ student.id }}">Editar</a>
+                            <a type="button" style="background-color: #ff6961; border-color: #ff6961;" class="btn btn-danger" href="/student-delete/{{ student.id }}">Eliminar</a>
                         </td>
                     </tr>
 
@@ -170,4 +170,5 @@
             <script src={% static 'front/list.js' %}></script>
             <script src={% static 'front/active_students.js' %}></script>
             {% endblock %}
+    </div>
 </div>
