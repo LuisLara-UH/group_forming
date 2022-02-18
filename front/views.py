@@ -67,7 +67,10 @@ def optimize(request):
         for idS in id_students:
             students.append(Student.objects.get(id=idS))
         print(prop)
-        result = group_students(students, int(cant_groups), prop)
+        try:
+            result = group_students(students, int(cant_groups), prop, False)
+        except:
+            result = group_students(students, int(cant_groups), prop, True)
         print(str(result))
         print(age_avg(result))
         return redirect('student-list')

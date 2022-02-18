@@ -4,6 +4,7 @@ from pulp import *
 import numpy as np
 from datetime import datetime
 from gekko import GEKKO
+from random import randint
 
 
 def get_student_form(student: Student):
@@ -64,7 +65,7 @@ def get_students_group(group_students, all_students):
     return students_in, students_out
 
 
-def group_students(student_list: [Student], groups_amount: int, field: str) -> [(Student, GroupModel)]:
+def group_students(student_list: [Student], groups_amount: int, field: str, obj_func_null: bool) -> [(Student, GroupModel)]:
     students_amount = len(student_list)
 
     model = GEKKO(remote=False)
@@ -84,7 +85,17 @@ def group_students(student_list: [Student], groups_amount: int, field: str) -> [
     for j in range(groups_amount):
         model.Equation(model.sum([decision_vars[i, j] for i in range(students_amount)]) >= int(students_amount / groups_amount))
 
-    model.Obj(function(student_list, field, decision_vars, groups_amount, model, values))  # Objective
+    for j in range(groups_amount):
+        for k in range(groups_amount):
+            model.Equation(model.sum([decision_vars[i, j] for i in range(students_amount)]) >=
+                           model.sum([decision_vars[i, k] for i in range(students_amount)]) - 1)
+
+    if obj_func_null:
+        model.Obj(random_position_value(decision_vars, students_amount, groups_amount) +
+                  random_position_value(decision_vars, students_amount, groups_amount) +
+                  random_position_value(decision_vars, students_amount, groups_amount))
+    else:
+        model.Obj(function(student_list, field, decision_vars, groups_amount, model, values))  # Objective
 
     
     model.solve()
@@ -97,6 +108,7 @@ def group_students(student_list: [Student], groups_amount: int, field: str) -> [
 
     
     return res
+
 
 def get_values(student_list: [Student], field: str, decision_vars, groups_amount: int, model):
     string_number_val = {str: int}
@@ -118,6 +130,7 @@ def get_values(student_list: [Student], field: str, decision_vars, groups_amount
         result.append(string_number_val[field_value])
     return result
 
+
 def function(student_list: [Student], field: str, decision_vars, groups_amount: int, model, values):
     group_values = [[] for _ in range(groups_amount)]
     for j in range(groups_amount):
@@ -125,6 +138,7 @@ def function(student_list: [Student], field: str, decision_vars, groups_amount: 
                                 for i in range(len(student_list))])
 
     return model.sum([distance(group_values[j - 1], group_values[j]) for j in range(1, groups_amount)])
+
 
 def grouping_value(student_list: [Student], field: str, decision_vars, groups_amount: int, model):
     # Assign values to strings
@@ -154,3 +168,7 @@ def grouping_value(student_list: [Student], field: str, decision_vars, groups_am
 
 def distance(val1: int, val2: int):
     return (val1 - val2)*(val1 - val2)
+
+
+def random_position_value(items, len1: int, len2: int):
+    return items[randint(0, len1), randint(0, len2)]
