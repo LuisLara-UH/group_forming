@@ -4,7 +4,7 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'front/list.css' %}"/>
 
-<h3>Add or remove table columns</h3>
+<h3>Añadir o Remover columna de la tabla</h3>
 <div id="addRemoveColumnsContainer">
     <div id="addColumnsContainer">
         <div class="itemAdd" onClick='addColumn(this)'>
@@ -22,13 +22,13 @@
    
 </div>
 
-<h3>Filters</h3>
+<h3>Filtros</h3>
 <div style="display:flex; align-items:center">
-<p>Create <input id="postCantGroups" type="Number" min='1' style='width:55px' value='1'/> groups with the selected students width the field <select id="fieldOptimize"></select> homogenous</p>
-<input type="button" value="Create" style="height:40px; margin-left:10px" onClick='optimize()'/>
+<p>Crear <input id="postCantGroups" type="Number" min='1' style='width:55px' value='1'/> grupo(s) con estudiantes seleccionados con el campo <select id="fieldOptimize"></select> homogéneo</p>
+<input type="button" value="Crear" style="height:40px; margin-left:10px" onClick='optimize()'/>
 </div>
 
-<input type="button" value="Add Filter" onClick='addFilter()'/>
+<input type="button" value="Añadir Filtro" onClick='addFilter()'/>
 <br/>
 
 <div id="filtersContainer">
@@ -38,7 +38,7 @@
 </div>    
 
 <div class="card-body">
-    <h4>Students List</h4>
+    <h4>Lista de Estudiantes</h4>
     <table class="table">
         <thead>
             <tr>
@@ -135,7 +135,7 @@
         </tbody>
     </table>
     <!-- Button to create new student-->
-    <a type="button" class="btn btn-success" href="{%url 'student-create' %}">Create</a>
+    <a type="button" class="btn btn-success" href="{%url 'student-create' %}">Crear</a>
 
     <!-- Button to upload excel file-->
     <form action="{% url 'upload-file' %}" method="post" enctype="multipart/form-data">
@@ -149,7 +149,7 @@
         <p>
         <input type="submit"
                class="btn btn-success"
-               value="Upload"
+               value="Subir"
                style="border: 1px solid green; padding:5px; border-radius: 2px; cursor: pointer;">
     </form>
 

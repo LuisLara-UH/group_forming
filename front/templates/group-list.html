@@ -3,13 +3,13 @@
 {% load static %}
 
 <div class="card-body">
-    <h4>Group List</h4>
-    <a href={% url 'create-group' %}>Create new group</a>
+    <h4>Lista de Grupos</h4>
+    <a href={% url 'create-group' %}>Crear Nuevo Grupo</a>
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">Group Name</th>
-                <th scope="col">Cant of Student</th>
+                <th scope="col">Nombre de Grupo</th>
+                <th scope="col">Cantidad de Estudiantes</th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -20,9 +20,9 @@
             <tr>
                 <td>{{ group.group.name}}</td>
                 <td>{{ group.countStudents }}</td>
-                <td><a  href="/change-group-name/{{group.group.id}}">Change Group Name</a></td>
-                <td ><a href="/group-students/{{group.group.id}}">Add or remove students from this group</a></td>
-                <td ><a href="delete-group/{{group.group.id}}">Delete this group</a></td>
+                <td><a  href="/change-group-name/{{group.group.id}}">Cambiar Nombre de Grupo</a></td>
+                <td ><a href="/group-students/{{group.group.id}}">Añadir o Remover estudiantes del grupo</a></td>
+                <td ><a href="delete-group/{{group.group.id}}">Eliminar Grupo</a></td>
             </tr>
             {% endfor %}
         </tbody>

@@ -2,12 +2,12 @@
 {% block content %}
 {% load static %}
 <div class="card-body">
-    <h4>Update Student</h4>
+    <h4>Actualizar Estudiante</h4>
     <form method="post">
         {% csrf_token %}
         {{form.as_p}}
-        <a type="button" class="btn btn-danger" href="{%url 'student-list' %}">Cancel</a>
-        <button type="submit" class="btn btn-success">Accept</button>
+        <a type="button" class="btn btn-danger" href="{%url 'student-list' %}">Cancelar</a>
+        <button type="submit" class="btn btn-success">Aceptar</button>
     </form>
 </div>
 
