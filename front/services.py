@@ -171,4 +171,4 @@ def distance(val1: int, val2: int):
 
 
 def random_position_value(items, len1: int, len2: int):
-    return items[randint(0, len1), randint(0, len2)]
+    return items[randint(0, len1 - 1), randint(0, len2 - 1)]
