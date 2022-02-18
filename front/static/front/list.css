@@ -42,12 +42,12 @@
 
 .buttonAdd
 {
-    background: 3089ca;
+    background: #3089ca;
 }
 
 .buttonRemove
 {
-    background: red;
+    background: #ff6961;
 }
 
 .itemAdd:hover>.buttonAdd, .itemRemove:hover>.buttonRemove

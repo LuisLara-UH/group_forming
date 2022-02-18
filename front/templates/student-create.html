@@ -5,12 +5,12 @@
 <link rel="stylesheet" type="text/css" href="{% static 'front/styles.css' %}"/>
 
 <div class="card-body">
-    <h5>Crear Nuevo Estudiante</h5>
+    <h3 style="margin-bottom: 2%;">Crear Nuevo Estudiante</h3>
     <form method="post">
         {% csrf_token %}
         {{form.as_p}}
-        <a type="button" class="btn btn-danger" href="{%url 'student-list' %}">Cancelar</a>
-        <button type="submit" class="btn btn-success primary-color">Aceptar</button>
+        <a style="background-color: #ff6961; border-color: #ff6961;" type="button" class="btn btn-danger" href="{%url 'student-list' %}">Cancelar</a>
+        <button style="background-color: #3089ca; border-color: #3089ca;" type="submit" class="btn btn-success">Aceptar</button>
     </form>
 </div>
 

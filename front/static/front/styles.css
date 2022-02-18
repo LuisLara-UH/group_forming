@@ -1,45 +1,19 @@
-#commun-margin {
-    margin:0 5%;
-
-}
-
 .primary-color {
     color:  #3089ca;
 }
 
-#home-welcome-style{
-    position: relative;
-    align-items:center;
-    margin: auto;
-}
-
-#title-img {
-    height: 300px;
-    width: inherit;
-    position: relative;
-    object-fit: cover;
-}
-
-#group-student-img {
-    width: 300px;
-}
-
 #subtitle-style {
-    position: absolute;
+    position: relative;
     text-align: center;
     font-size: 1rem;
-    /* top: 60px; */
-
 }
 
 #title-style {
-    position: absolute;
+    position: relative;
     color: #3089ca;
-    /* text-align: center; */
+    text-align: center;
     font-size: 3.5rem;
     font-family:  serif;
-    /* font-weight: 300; */
-    top: 8px;
 }
 
 /* card */
