@@ -41,6 +41,31 @@
             </div>
         </div>
 
+         <!-- Button to create new student-->
+         <a style="margin: 1% 0; background-color: 3089ca; border-color: 3089ca;" type="button" class="btn btn-success" href="{%url 'student-create' %}">Crear Nuevo Estudiante</a>
+
+         <!-- Button to upload excel file-->
+         <form action="{% url 'upload-file' %}" method="post" enctype="multipart/form-data">
+             
+             {% csrf_token %}
+             <div style="display:flex">
+             <input type="file"
+             accept=".xls,.xlsx"
+             title="Upload excel file"
+             name="excel_file"
+             style="border: 1px solid black; padding: 5px;"
+             required="required">
+             <p>
+                 <input type="submit"
+                 style="margin: 1% 0; background-color: 3089ca; border-color: 3089ca;"
+                 class="btn btn-success"
+                 value="Subir"
+                 style="border: 1px solid 3089ca; padding:5px; border-radius: 2px; cursor: pointer;">
+             
+                </div>
+                </form>
+            
+
         <div class="card-body">
             <h3>Lista de Estudiantes</h3>
 
@@ -146,26 +171,7 @@
                     {% endfor %}
                 </tbody>
             </table>
-            <!-- Button to create new student-->
-            <a style="margin: 1% 0; background-color: 3089ca; border-color: 3089ca;" type="button" class="btn btn-success" href="{%url 'student-create' %}">Crear Nuevo Estudiante</a>
-
-            <!-- Button to upload excel file-->
-            <form action="{% url 'upload-file' %}" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <input type="file"
-                accept=".xls,.xlsx"
-                title="Upload excel file"
-                name="excel_file"
-                style="border: 1px solid black; padding: 5px;"
-                required="required">
-                <p>
-                    <input type="submit"
-                    style="margin: 1% 0; background-color: 3089ca; border-color: 3089ca;"
-                    class="btn btn-success"
-                    value="Subir"
-                    style="border: 1px solid 3089ca; padding:5px; border-radius: 2px; cursor: pointer;">
-                </form>
-
+           
             </div>
             <script src={% static 'front/list.js' %}></script>
             <script src={% static 'front/active_students.js' %}></script>

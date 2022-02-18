@@ -121,13 +121,34 @@ function filterText(field, value)
 
 function filterNumber(field, valueSince, valueTo)
 {
+    if(isNaN(valueSince) || isNaN(valueTo))
+        return;
+
+        newStudentsFiltered = []
+        for(let i = 0; i < studentsFiltered.length; i++)
+        {
+            let age = Number(studentsFiltered[i].Age)
+
+            if(!isNaN(age) && valueSince <= age && valueTo >= age)
+                newStudentsFiltered.push(studentsFiltered[i])
+            
+            else if(checked[studentsFiltered[i].id])
+                checkStudent(studentsFiltered[i].id)
+                
+        }
     
+        studentsFiltered = []
+        for(let i = 0; i < newStudentsFiltered.length; i++)
+            studentsFiltered.push(newStudentsFiltered[i])
+    
+        udpateTable()
 }
 
 function changeFilterValue(element)
 {
     let select = element.parentNode.parentNode.getElementsByTagName('select')[0]
     select.disabled = true
+    element.disabled = true
     
     switch(element.type.toLowerCase())
     {
@@ -365,7 +386,10 @@ function optimize()
             'Content-Type':'application/json',
             'X-CSRFToken': csrftoken
         }
-    })
+    }).then(m=>
+        {
+            window.location.href = '/group-list'
+        })
 }
 
 function selectAll(element)

@@ -72,7 +72,18 @@ def optimize(request):
         except:
             result = group_students(students, int(cant_groups), prop, True)
         
-        return redirect('student-list')
+        return create_optimized_groups(result)
+
+def create_optimized_groups(data):
+    index = 0
+    for group in data:
+        index += 1
+        new_group = GroupModel(name = "!!! cambiar_nombre " + str(index))
+        new_group.save()
+        for student in group:
+            new_group.students.add(student)
+
+    return redirect('group-list')
 
 
 """Upload Files"""
