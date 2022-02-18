@@ -82,6 +82,7 @@ var fieldsOptimize = document.getElementById('fieldOptimize')
 var keysFields = Object.keys(columnsToFields)
 for(let i = 0; i < keysFields.length; i++)
 {
+    if(modelColumnsType[keysFields[i]] != 'date')
     fieldsOptimize.innerHTML += `<option value=${columnsToFields[keysFields[i]]}>${keysFields[i]}</option>`
 }
 
