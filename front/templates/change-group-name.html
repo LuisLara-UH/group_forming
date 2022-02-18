@@ -2,16 +2,16 @@
 {% block content %}
 {% load static %}
 <div class="card-body">
-    <h4>Change Group Name</h4>
+    <h4>Cambiar Nombre del Grupo</h4>
     <form method="post">
         {% csrf_token %}
         <div class='form-group'>
-            <label for="name">Group Name</label>
+            <label for="name">Nombre del Grupo</label>
             <input type="text" name="name" id="name" value="{{form.name}}" />
         </div>
         
-        <a type="button" class="btn btn-danger" href="{%url 'group-list' %}">Cancel</a>
-        <button type="submit" class="btn btn-success">Accept</button>
+        <a style="background-color: #ff6961; border-color: #ff6961;" type="button" class="btn btn-danger" href="{%url 'group-list' %}">Cancelar</a>
+        <button style="background-color: #3089ca; border-color: #3089ca;" type="submit" class="btn btn-success">Aceptar</button>
     </form>
 </div>
 

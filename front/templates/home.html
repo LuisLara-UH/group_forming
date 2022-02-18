@@ -1,12 +1,40 @@
-<!-- TODO: Fill this view -->
-
 {% extends "base.html" %}
 {% block content %}
+{% load static %}
 
-<!-- <tu codigo aquí> -->
-    
-    <a href={% url 'student-list' %}>Students</a>
-    <br/>
-    <a href={% url 'group-list' %}>Groups</a>
+<link rel="stylesheet" type="text/css" href="{% static 'front/styles.css' %}"/>
+
+
+<div>
+  <div style="margin: 2% 0;">
+    <div><h1 id="title-style">Formación de Grupos</h1></div>
+    <div><h4 id="subtitle-style">
+      Sitio para formar distribución de grupos apoyado en Algoritmos de Optimización
+    </h4></div>
+  </div>
+
+  <div class="center;">
+    <div class="row">
+      <div class="column">
+        <a href={% url 'student-list' %}>
+          <div class="card">
+            <img src="../static/students.png" alt="students">
+            <p>Lista de Estudiantes</p>
+          </div>
+        </a>
+      </div>
+
+      <div class="column">
+        <a href={% url 'group-list' %}>
+          <div class="card">
+            <img src="../static/class1.jpeg" alt="students">
+            <p>Lista de Grupos</p>
+          </div>
+        </a>
+      </div>
+  </div>
+</div>
+
+
 
 {% endblock %}

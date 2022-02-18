@@ -7,7 +7,6 @@
 
 #removeColumnsContainer, #addColumnsContainer
 {
-    width: 100vw;
     flex-wrap: wrap;
 }
 
@@ -43,12 +42,12 @@
 
 .buttonAdd
 {
-    background: green;
+    background: #3089ca;
 }
 
 .buttonRemove
 {
-    background: red;
+    background: #ff6961;
 }
 
 .itemAdd:hover>.buttonAdd, .itemRemove:hover>.buttonRemove
