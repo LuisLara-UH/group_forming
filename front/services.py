@@ -137,7 +137,7 @@ def function(student_list: [Student], field: str, decision_vars, groups_amount: 
         group_values[j] = model.sum([decision_vars[i, j] * values[i]
                                 for i in range(len(student_list))])
 
-    return model.sum([distance(group_values[j - 1], group_values[j]) for j in range(1, groups_amount)])
+    return model.sum([distance(group_values[i], group_values[j]) for i in range(groups_amount) for j in range(groups_amount)])
 
 
 def grouping_value(student_list: [Student], field: str, decision_vars, groups_amount: int, model):
