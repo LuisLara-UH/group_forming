@@ -290,8 +290,7 @@ function udpateTable()
     if(checked[studentsFiltered[j].id])    
         document.getElementById(`${studentsFiltered[j].id}`).checked=1
 
-    if(cantChecked < studentsFiltered.length)
-        document.getElementById("selectAll").checked=0
+    
     }
 }
 

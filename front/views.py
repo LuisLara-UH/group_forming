@@ -71,8 +71,7 @@ def optimize(request):
             result = group_students(students, int(cant_groups), prop, False)
         except:
             result = group_students(students, int(cant_groups), prop, True)
-        
-        print(age_avg(result))
+
         return create_optimized_groups(result)
 
 def create_optimized_groups(data):
